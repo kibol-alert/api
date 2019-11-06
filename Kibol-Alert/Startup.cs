@@ -32,14 +32,12 @@ namespace Kibol_Alert
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Kibol_AlertContext>(opt =>
-               opt.UseSqlServer("Kibol_Alert"));
+            services.AddDbContext<Kibol_AlertContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("Kibol_Alert")));
 
             services.AddControllers()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddDbContext<Kibol_AlertContext>(
-               options => options.UseSqlServer(Configuration.GetConnectionString("Kibol_Alert")));
 
             services.AddScoped<IJwtHelper, JwtHelper>();
             services.AddScoped<IApiResponseFactory, ApiResponseFactory>();
@@ -47,8 +45,8 @@ namespace Kibol_Alert
 
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<Kibol_AlertContext>();
-            
-           services.AddSwaggerDocument();
+
+            services.AddSwaggerDocument();
 
             services.AddSwaggerDocument(document =>
             {

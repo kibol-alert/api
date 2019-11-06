@@ -5,6 +5,7 @@ using Kibol_Alert.Requests;
 using Kibol_Alert.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 
 namespace Kibol_Alert.Controllers
@@ -22,14 +23,14 @@ namespace Kibol_Alert.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiSuccessResponse<bool>))]
-        public IActionResult Register(RegisterRequest request) => ResolveServiceResponse(_authenticationService.Register(request));
+        public async Task<IActionResult> Register(RegisterRequest request) => ResolveServiceResponse(await _authenticationService.Register(request));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiSuccessResponse<JwtToken>))]
-        public IActionResult Login(LoginRequest request) => ResolveServiceResponse(_authenticationService.Login(request));
+        public async Task<IActionResult> Login(LoginRequest request) => ResolveServiceResponse(await _authenticationService.Login(request));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiSuccessResponse<bool>))]
-        public IActionResult Logout() => ResolveServiceResponse(_authenticationService.Logout());
+        public async Task<IActionResult> LogoutAsync() => ResolveServiceResponse(await _authenticationService.Logout());
     }
 }
