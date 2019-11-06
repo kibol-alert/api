@@ -17,6 +17,7 @@ using Kibol_Alert.Services;
 using Kibol_Alert.Responses.Wrappers.Factories;
 using Microsoft.AspNetCore.Identity;
 using Auth0.ManagementApi.Models;
+using NSwag.Generation.Processors.Security;
 
 namespace Kibol_Alert
 {
@@ -36,14 +37,18 @@ namespace Kibol_Alert
 
             services.AddControllers()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             services.AddDbContext<Kibol_AlertContext>(
                options => options.UseSqlServer(Configuration.GetConnectionString("Kibol_Alert")));
+
             services.AddScoped<IJwtHelper, JwtHelper>();
             services.AddScoped<IApiResponseFactory, ApiResponseFactory>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<Kibol_AlertContext>();
-            services.AddSwaggerDocument();
+            
+           services.AddSwaggerDocument();
 
             services.AddSwaggerDocument(document =>
             {
@@ -59,8 +64,9 @@ namespace Kibol_Alert
                     Description = "JWT Token - remember to add 'Bearer ' before the token",
                 }));
             });
+           
         }
-
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -78,6 +84,7 @@ namespace Kibol_Alert
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
             app.UseOpenApi(options =>
             {
                 options.DocumentName = "swagger";
@@ -87,10 +94,12 @@ namespace Kibol_Alert
                     document.Schemes.Add(OpenApiSchema.Https);
                 };
             });
+
             app.UseSwaggerUi3(options =>
             {
                 options.DocumentPath = "/swagger/v1/swagger.json";
             });
+            
             app.UseRouting();
 
             app.UseAuthorization();

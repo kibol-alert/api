@@ -21,14 +21,14 @@ namespace Kibol_Alert.Services.ServiceResponses
             Data = responseData;
         }
 
-        public static ServiceResponse<bool> Ok(bool data = true, string message = "") => new ServiceResponse<bool>(data, true, message);
+        public static ServiceResponse<bool> Ok(bool data = true, string message = "OK") => new ServiceResponse<bool>(data, true, message);
 
         public static ServiceResponse<T> Ok(T data, string message = "")
         {
             return new ServiceResponse<T>(data, true, message);
         }
 
-        public static ServiceResponse<T> Error(string message = "")
+        public static ServiceResponse<T> Error(string message = "OKn't")
         {
             return new ServiceResponse<T>(default(T), false, message);
         }
