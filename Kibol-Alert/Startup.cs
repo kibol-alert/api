@@ -79,9 +79,14 @@ namespace Kibol_Alert
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseExceptionHandler(new ExceptionHandlerOptions()
+            {
+                ExceptionHandler = new Middleware.JsonExceptionMiddleware().Invoke
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             

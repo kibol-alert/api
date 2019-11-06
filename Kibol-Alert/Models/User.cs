@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kibol_Alert.Models
 {
-    public class User: IdentityUser
+    public class User: IdentityUser<int>
     {
         public int UserId { get; set; }
         public bool IsDeleted { get; set; } = false;
