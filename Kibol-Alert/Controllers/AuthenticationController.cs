@@ -6,12 +6,13 @@ using Kibol_Alert.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Kibol_Alert.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : BaseController
     {
         private readonly IAuthenticationService _authenticationService;

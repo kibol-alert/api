@@ -1,11 +1,5 @@
-using NSwag;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,8 +10,9 @@ using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.Services;
 using Kibol_Alert.Responses.Wrappers.Factories;
 using Microsoft.AspNetCore.Identity;
-using Auth0.ManagementApi.Models;
+using Kibol_Alert.Models;
 using NSwag.Generation.Processors.Security;
+using NSwag;
 
 namespace Kibol_Alert
 {
@@ -32,6 +27,8 @@ namespace Kibol_Alert
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerDocument();
+
             services.AddDbContext<Kibol_AlertContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("Kibol_Alert")));
 
@@ -46,11 +43,10 @@ namespace Kibol_Alert
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<Kibol_AlertContext>();
 
-            services.AddSwaggerDocument();
+            
 
             services.AddSwaggerDocument(document =>
             {
-
                 document.Title = "toDo";
                 document.DocumentName = "swagger";
                 document.OperationProcessors.Add(new OperationSecurityScopeProcessor("jwt"));
@@ -67,6 +63,7 @@ namespace Kibol_Alert
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
             if (env.IsDevelopment())
             {
                 app.UseCors(builder => builder
@@ -77,17 +74,14 @@ namespace Kibol_Alert
             }
             else
             {
+                app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
-            app.UseExceptionHandler(new ExceptionHandlerOptions()
-            {
-                ExceptionHandler = new Middleware.JsonExceptionMiddleware().Invoke
-            });
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            
             app.UseOpenApi(options =>
             {
                 options.DocumentName = "swagger";
@@ -102,9 +96,13 @@ namespace Kibol_Alert
             {
                 options.DocumentPath = "/swagger/v1/swagger.json";
             });
-            
-            app.UseRouting();
 
+            app.UseExceptionHandler(new ExceptionHandlerOptions()
+            {
+                ExceptionHandler = new Middleware.JsonExceptionMiddleware().Invoke
+            });
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

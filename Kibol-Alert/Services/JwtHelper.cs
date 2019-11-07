@@ -1,16 +1,14 @@
 ﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Kibol_Alert.Models;
 using Kibol_Alert.Helpers;
 using Kibol_Alert.Services.Interfaces;
 using System;
 using System.Text;
 using System.Linq;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Kibol_Alert.Database;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Kibol_Alert.Services
 {
