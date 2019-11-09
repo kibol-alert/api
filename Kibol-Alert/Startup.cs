@@ -60,7 +60,7 @@ namespace Kibol_Alert
             });
            
         }
-        
+         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
