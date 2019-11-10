@@ -3,8 +3,6 @@ using Kibol_Alert.Models;
 using Kibol_Alert.Services.ServiceResponses;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +14,6 @@ namespace Kibol_Alert.Services
         private readonly SignInManager<User> _signInManager = null;
         private readonly UserManager<User> _userManager = null;
         private readonly IJwtHelper _jwtHelper;
-
 
         public AuthenticationService(Kibol_AlertContext context, SignInManager<User> signInManager,
             UserManager<User> userManager,
@@ -37,7 +34,8 @@ namespace Kibol_Alert.Services
             var user = new User()
             {
                 Email = request.Email,
-                UserName = request.UserName
+                UserName = request.UserName,
+                FavoriteClub = request.FavourtiteClub
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -61,7 +59,6 @@ namespace Kibol_Alert.Services
             {
                 return ServiceResponse<JwtToken>.Error("User doesn't exist");
             }
-
             return ServiceResponse<JwtToken>.Ok(token);
         }
 
@@ -69,9 +66,6 @@ namespace Kibol_Alert.Services
         {
             await _signInManager.SignOutAsync();
             return ServiceResponse<bool>.Ok();
-
         }
-
-
     }
 }

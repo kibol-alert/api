@@ -35,15 +35,12 @@ namespace Kibol_Alert
             services.AddControllers()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-
             services.AddScoped<IJwtHelper, JwtHelper>();
             services.AddScoped<IApiResponseFactory, ApiResponseFactory>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<Kibol_AlertContext>();
-
-            
 
             services.AddSwaggerDocument(document =>
             {

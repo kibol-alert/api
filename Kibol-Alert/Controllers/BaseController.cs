@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Net;
 using Kibol_Alert.Responses.Wrappers.Factories;
 using Kibol_Alert.Services.ServiceResponses;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +18,6 @@ namespace Kibol_Alert.Controllers
         {
             _responseFactory = responseFactory;
         }
-
 
         protected ObjectResult CreateErrorResponse(HttpStatusCode code, string errorMessage) => StatusCode((int)code, _responseFactory.Error(errorMessage));
 

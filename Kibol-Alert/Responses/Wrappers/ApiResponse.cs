@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Kibol_Alert.Responses.Wrappers
+﻿namespace Kibol_Alert.Responses.Wrappers
 {
     public abstract class ApiResponse
     {

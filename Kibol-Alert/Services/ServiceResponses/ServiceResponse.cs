@@ -1,17 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Kibol_Alert.Services.ServiceResponses
+﻿namespace Kibol_Alert.Services.ServiceResponses
 {
     public class ServiceResponse<T>
     {
         public T Data { get; set; }
-
         public bool Success { get; set; }
-
         public string Message { get; set; }
 
         public ServiceResponse(T responseData, bool success, string message)

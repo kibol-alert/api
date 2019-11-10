@@ -1,8 +1,7 @@
-﻿using Kibol_Alert.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using Kibol_Alert.Models;
 
 namespace Kibol_Alert.Database
 {
@@ -13,5 +12,25 @@ namespace Kibol_Alert.Database
         {
         }
 
+        public DbSet<Club> Clubs { get; set; }
+        public DbSet<ClubRelations> Relations {get; set;}
+    
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Kibol_Alert;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder
+                    .Entity<Club>()
+                    .HasMany(i => i.ClubRelations);
+            //Work in progress
+        }
     }
 }

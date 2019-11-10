@@ -17,14 +17,11 @@ namespace Kibol_Alert.Services
         private readonly Kibol_AlertContext _context;
         private readonly AppSettings _appSettings;
 
-
         public JwtHelper(IOptions<AppSettings> appSettings, Kibol_AlertContext context)
         {
             _appSettings = appSettings.Value;
             _context = context;
-
         }
-
 
         JwtToken IJwtHelper.GenerateJwtToken(string username)
         {

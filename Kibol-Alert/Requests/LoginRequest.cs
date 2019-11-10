@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace Kibol_Alert.Requests
 {
     public class LoginRequest
