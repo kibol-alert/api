@@ -1,4 +1,5 @@
 ﻿using Kibol_Alert.Database;
+using Kibol_Alert.Models;
 using Kibol_Alert.Services.ServiceResponses;
 using Kibol_Alert.ViewModels;
 using System;
@@ -36,11 +37,11 @@ namespace Kibol_Alert.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<ServiceResponse<IEnumerable<ClubVM>>> AddRelation(ClubRelationVM relation)
+        public async Task<ServiceResponse<IEnumerable<ClubVM>>> AddRelation(ClubRelations relation)
         {
             throw new NotImplementedException();
         }
-        public async Task<ServiceResponse<IEnumerable<ClubVM>>> DeleteRelation(ClubRelationVM relation)
+        public async Task<ServiceResponse<IEnumerable<ClubVM>>> DeleteRelation(ClubRelations relation)
         {
             throw new NotImplementedException();
         }

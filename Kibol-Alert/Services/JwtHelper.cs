@@ -1,14 +1,16 @@
 ﻿using Microsoft.Extensions.Options;
-using Kibol_Alert.Models;
-using Kibol_Alert.Helpers;
-using Kibol_Alert.Services.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using System.Linq;
 using System.Security.Claims;
-using Kibol_Alert.Database;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
+using Kibol_Alert.Models;
+using Kibol_Alert.Helpers;
+using Kibol_Alert.Services.Interfaces;
+using Kibol_Alert.Database;
+
+
 
 namespace Kibol_Alert.Services
 {
@@ -23,7 +25,7 @@ namespace Kibol_Alert.Services
             _context = context;
         }
 
-        JwtToken IJwtHelper.GenerateJwtToken(string username)
+        public JwtToken GenerateJwtToken(string username)
         {
             User user = _context.Users.SingleOrDefault(i => i.UserName == username);
 

@@ -13,7 +13,7 @@ namespace Kibol_Alert.ViewModels
         public string League { get; set; }
         public string LogoUri { get; set; }
         public virtual ICollection<ClubRelations> ClubRelations { get; set; }
-        public virtual ICollection<User> Fans { get; set; }
+        public virtual ICollection<UserVM> Fans { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

@@ -46,11 +46,11 @@ namespace Kibol_Alert.Controllers
         
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiSuccessResponse<ClubVM>))]
-        public async Task<IActionResult> AddRelation(string name, string logoUri) => ResolveServiceResponse(await _clubsService.AddRelation(ClubRelationVM relation));
+        public async Task<IActionResult> AddRelation(string name, string logoUri) => ResolveServiceResponse(await _clubsService.AddRelation(ClubRelation relation));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiSuccessResponse<ClubVM>))]
-        public async Task<IActionResult> DeleteRelation(string name, string logoUri) => ResolveServiceResponse(await _clubsService.AddRelation(ClubRelationVM relation));
+        public async Task<IActionResult> DeleteRelation(string name, string logoUri) => ResolveServiceResponse(await _clubsService.AddRelation(ClubRelation relation));
         */
     }
 }

@@ -6,6 +6,6 @@ namespace Kibol_Alert.Requests
     {
         [Required]
         public string ConfirmedPassword { get; set; }
-        public string FavourtiteClub { get; set; }
+        public string Club { get; set; }
     }
 }
