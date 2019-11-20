@@ -37,11 +37,11 @@ namespace Kibol_Alert.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<ServiceResponse<IEnumerable<ClubVM>>> AddRelation(ClubRelations relation)
+        public async Task<ServiceResponse<IEnumerable<ClubVM>>> AddRelation(ClubRelation relation)
         {
             throw new NotImplementedException();
         }
-        public async Task<ServiceResponse<IEnumerable<ClubVM>>> DeleteRelation(ClubRelations relation)
+        public async Task<ServiceResponse<IEnumerable<ClubVM>>> DeleteRelation(ClubRelation relation)
         {
             throw new NotImplementedException();
         }

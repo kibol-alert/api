@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Kibol_Alert.Models
 {
-    public class ClubRelations
+    public class ClubRelation
     {
         public Club FirtClub { get; set; }
         public Club SecondClub { get; set; }
