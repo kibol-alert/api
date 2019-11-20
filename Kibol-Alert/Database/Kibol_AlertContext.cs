@@ -26,6 +26,11 @@ namespace Kibol_Alert.Database
                 .WithOne(i => i.Club);
 
             modelBuilder
+                .Entity<User>()
+                .HasOne(i => i.Club)
+                .WithMany(i => i.Fans);
+
+            modelBuilder
                 .Entity<ClubRelation>()
                 .HasOne(i => i.FirtClub)
                 .WithMany(i => i.ClubRelations);

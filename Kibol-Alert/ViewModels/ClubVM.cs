@@ -1,8 +1,7 @@
-﻿using Kibol_Alert.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Kibol_Alert.Models;
+
+
 
 namespace Kibol_Alert.ViewModels
 {
