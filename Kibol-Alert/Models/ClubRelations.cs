@@ -9,6 +9,10 @@ namespace Kibol_Alert.Models
     {
         public Club FirtClub { get; set; }
         public Club SecondClub { get; set; }
-        //public enum RelationType
+        enum RelationType
+        {
+            Beef = 1,
+            Tie
+        }
     }
 }
