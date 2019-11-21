@@ -8,7 +8,13 @@ namespace Kibol_Alert.Requests
 {
     public class RegisterRequest : LoginRequest
     {
-        [Required]
+        
+        public RegisterRequest(string confirmedPassword)
+        {
+            this.ConfirmedPassword = confirmedPassword;
+               
+        }
+        
         public string ConfirmedPassword { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 using NSwag;
+using NSwag.Generation.Processors.Contexts;
+using NSwag.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

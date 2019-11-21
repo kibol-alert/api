@@ -8,7 +8,14 @@ namespace Kibol_Alert.Requests
 {
     public class LoginRequest
     {
-        public string Email { get; set; }
+        public LoginRequest(string email, string userName, string password) 
+        {
+            this.Email = email;
+                this.UserName = userName;
+                this.Password = password;
+               
+        }
+                public string Email { get; set; }
         [Required]
         public string UserName { get; set; }
         [Required]
