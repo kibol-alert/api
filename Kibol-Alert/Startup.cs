@@ -8,11 +8,11 @@ using Kibol_Alert.Database;
 using Microsoft.AspNetCore.Mvc;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.Services;
-using Kibol_Alert.Responses.Wrappers.Factories;
 using Microsoft.AspNetCore.Identity;
 using Kibol_Alert.Models;
 using NSwag.Generation.Processors.Security;
 using NSwag;
+using AutoWrapper;
 
 namespace Kibol_Alert
 {
@@ -36,7 +36,6 @@ namespace Kibol_Alert
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddScoped<IJwtHelper, JwtHelper>();
-            services.AddScoped<IApiResponseFactory, ApiResponseFactory>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddIdentity<User, IdentityRole<int>>()
@@ -60,24 +59,9 @@ namespace Kibol_Alert
          
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseRouting();
-            if (env.IsDevelopment())
-            {
-                app.UseCors(builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseCors(builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-                app.UseHsts();
-                app.UseHttpsRedirection();
-            }
+            app.UseCors();
+
+            app.UseApiResponseAndExceptionWrapper();
 
             app.UseOpenApi(options =>
             {
@@ -106,6 +90,25 @@ namespace Kibol_Alert
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRouting();
+            if (env.IsDevelopment())
+            {
+                app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+                app.UseHsts();
+                app.UseHttpsRedirection();
+            }
         }
     }
 }
