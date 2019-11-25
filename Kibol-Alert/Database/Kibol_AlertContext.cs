@@ -13,23 +13,33 @@ namespace Kibol_Alert.Database
         }
 
         public DbSet<Club> Clubs { get; set; }
-        public DbSet<ClubRelations> Relations {get; set;}
+        public DbSet<ClubRelation> ClubRelations {get; set;}
     
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Kibol_Alert;Trusted_Connection=True;MultipleActiveResultSets=true");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder
-                    .Entity<Club>()
-                    .HasMany(i => i.ClubRelations);
+                .Entity<Club>()
+                .HasMany(i => i.Fans)
+                .WithOne(i => i.Club);
+
+            modelBuilder
+                .Entity<User>()
+                .HasOne(i => i.Club)
+                .WithMany(i => i.Fans);
+
+            modelBuilder
+                .Entity<ClubRelation>()
+                .HasOne(i => i.FirtClub)
+                .WithMany(i => i.ClubRelations);
+
+            modelBuilder
+                .Entity<ClubRelation>()
+                .HasOne(i => i.SecondClub)
+                .WithMany(i => i.ClubRelations);
+
             //Work in progress
         }
     }
