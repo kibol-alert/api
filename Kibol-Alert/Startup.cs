@@ -63,7 +63,6 @@ namespace Kibol_Alert
             });
            
         }
-         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors();
@@ -79,6 +78,11 @@ namespace Kibol_Alert
                     document.Schemes.Add(OpenApiSchema.Https);
                 };
             });
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseSwaggerUi3(options =>
             {
