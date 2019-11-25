@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Kibol_Alert.Models;
 
 namespace Kibol_Alert.ViewModels
 {
@@ -10,7 +7,7 @@ namespace Kibol_Alert.ViewModels
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        public Club Club { get; set; }
         public bool IsBanned { get; set; } = false;
     }
 }

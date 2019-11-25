@@ -3,8 +3,6 @@ using Kibol_Alert.Models;
 using Kibol_Alert.Services.ServiceResponses;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +15,6 @@ namespace Kibol_Alert.Services
         private readonly UserManager<User> _userManager = null;
         private readonly IJwtHelper _jwtHelper;
 
-
         public AuthenticationService(Kibol_AlertContext context, SignInManager<User> signInManager,
             UserManager<User> userManager,
             IJwtHelper jwtHelper) : base(context)
@@ -27,7 +24,7 @@ namespace Kibol_Alert.Services
             _jwtHelper = jwtHelper;
         }
 
-        public ServiceResponse<bool> Register(RegisterRequest request)
+        public async Task<ServiceResponse<bool>> Register(RegisterRequest request)
         {
             if (Context.Users.Any(i => i.Email == request.Email))
                 return ServiceResponse<bool>.Error("Email Error");
@@ -37,23 +34,23 @@ namespace Kibol_Alert.Services
             var user = new User()
             {
                 Email = request.Email,
-                UserName = request.UserName
+                UserName = request.UserName,
             };
 
-            var result = _userManager.CreateAsync(user, request.Password);
+            var result = await _userManager.CreateAsync(user, request.Password);
 
-            if (result.IsFaulted)
+            if (!result.Succeeded)
             {
                 return ServiceResponse<bool>.Error();
             }
             return ServiceResponse<bool>.Ok();
         }
 
-        public ServiceResponse<JwtToken> Login(LoginRequest request)
+        public async Task<ServiceResponse<JwtToken>> Login(LoginRequest request)
         {
-            var result = _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
+            var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 
-            if (result.IsFaulted)
+            if (!result.Succeeded)
                 return ServiceResponse<JwtToken>.Error("Login failed");
 
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
@@ -61,19 +58,13 @@ namespace Kibol_Alert.Services
             {
                 return ServiceResponse<JwtToken>.Error("User doesn't exist");
             }
-
             return ServiceResponse<JwtToken>.Ok(token);
         }
 
-        public ServiceResponse<bool> Logout()
+        public async Task<ServiceResponse<bool>> Logout()
         {
-            var result = _signInManager.SignOutAsync();
-            if (result.IsFaulted)
-                return ServiceResponse<bool>.Error();
+            await _signInManager.SignOutAsync();
             return ServiceResponse<bool>.Ok();
-
         }
-
-
     }
 }
