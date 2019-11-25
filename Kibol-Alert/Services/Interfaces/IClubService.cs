@@ -2,8 +2,6 @@
 using Kibol_Alert.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
-using System.Linq;
 using Kibol_Alert.Requests;
 
 namespace Kibol_Alert.Services.Interfaces
