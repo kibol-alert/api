@@ -6,6 +6,7 @@
     <UserSecretsId>9c68eba0-aa1e-4284-8dd3-dc5aed0e7b73</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <StartupObject>Kibol_Alert.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
