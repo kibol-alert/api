@@ -1,11 +1,12 @@
 ﻿using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.Models;
-using Kibol_Alert.Services.ServiceResponses;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using AutoWrapper.Wrappers;
+using Kibol_Alert.Responses;
 
 namespace Kibol_Alert.Services
 {
@@ -24,12 +25,12 @@ namespace Kibol_Alert.Services
             _jwtHelper = jwtHelper;
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<Response> Register(RegisterRequest request)
         {
             if (Context.Users.Any(i => i.Email == request.Email))
-                return bool.Error("Email Error");
+                return new ErrorResponse("Email Error");
             if (request.Password != request.ConfirmedPassword)
-                return bool.Error("Passwords are not the same");
+                return new ErrorResponse("Passwords are not the same");
 
             var user = new User()
             {
@@ -41,30 +42,30 @@ namespace Kibol_Alert.Services
 
             if (!result.Succeeded)
             {
-                return bool.Error();
+                return new ErrorResponse("test");
             }
-            return bool.Ok();
+            return new SuccessResponse<bool>(true);
         }
 
-        public async Task<JwtToken> Login(LoginRequest request)
-        {
-            var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
+        //public async Task<ApiResponse> Login(LoginRequest request)
+        //{
+        //    var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 
-            if (!result.Succeeded)
-                return JwtToken.Error("Login failed");
+        //    if (!result.Succeeded)
+        //        return JwtToken.Error("Login failed");
 
-            var token = _jwtHelper.GenerateJwtToken(request.UserName);
-            if (token == null)
-            {
-                return JwtToken.Error("User doesn't exist");
-            }
-            return JwtToken.Ok(token);
-        }
+        //    var token = _jwtHelper.GenerateJwtToken(request.UserName);
+        //    if (token == null)
+        //    {
+        //        return JwtToken.Error("User doesn't exist");
+        //    }
+        //    return JwtToken.Ok(token);
+        //}
 
-        public async Task<bool> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return bool.Ok();
-        }
+        //public async Task<ApiResponse> Logout()
+        //{
+        //    await _signInManager.SignOutAsync();
+        //    return bool.Ok();
+        //}
     }
 }

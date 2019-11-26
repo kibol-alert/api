@@ -2,6 +2,7 @@ using System;
 using Xunit;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
+using Kibol_Alert.Models;
 
 namespace Kibol_Alert.Tests
 {
