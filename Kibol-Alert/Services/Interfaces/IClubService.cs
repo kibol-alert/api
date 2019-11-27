@@ -10,9 +10,9 @@ namespace Kibol_Alert.Services.Interfaces
     {
         public Task<Response> GetClubs(int skip, int take);
         public Task<Response> GetClub(int id);
-        public Task<Response> AddClub(ClubRelationRequest request);
+        public Task<Response> AddClub(ClubRequest request);
         public Task<Response> DeleteClub(int id);
-        public Task<Response> EditClub(int id, ClubRelationRequest request);
+        public Task<Response> EditClub(int id, ClubRequest request);
         public Task<Response> AddRelation(ClubRelationRequest request);
         public Task<Response> DeleteRelation(int id);
     }

@@ -32,7 +32,7 @@ namespace Kibol_Alert.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> AddClub(AddClubRequest request) => ResolveResponse(await _clubsService.AddClub(request));
+        public async Task<IActionResult> AddClub(ClubRequest request) => ResolveResponse(await _clubsService.AddClub(request));
 
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace Kibol_Alert.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<ClubVM>))]
-        public async Task<IActionResult> EditClub(int id, EditClubRequest request) => ResolveResponse(await _clubsService.EditClub(id, request));
+        public async Task<IActionResult> EditClub(int id, ClubRequest request) => ResolveResponse(await _clubsService.EditClub(id, request));
 
 
         [HttpPost]

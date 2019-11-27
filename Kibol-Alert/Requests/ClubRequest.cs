@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Kibol_Alert.Requests
 {
-    public class AddClubRequest
+    public class ClubRequest
     {
     }
 }

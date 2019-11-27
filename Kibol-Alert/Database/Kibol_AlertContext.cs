@@ -21,26 +21,41 @@ namespace Kibol_Alert.Database
             base.OnModelCreating(modelBuilder);
 
             modelBuilder
-                .Entity<Club>()
-                .HasMany(i => i.Fans)
-                .WithOne(i => i.Club);
+                .Entity<User>()
+                .HasKey(i => i.Id);
 
             modelBuilder
                 .Entity<User>()
                 .HasOne(i => i.Club)
-                .WithMany(i => i.Fans);
+                .WithMany(i => i.Fans)
+                .HasForeignKey(i => i.ClubId);
+
+            modelBuilder
+                .Entity<Club>()
+                .HasKey(i => i.Id);
+
+            modelBuilder
+                .Entity<Club>()
+                .HasMany(i => i.Fans)
+                .WithOne(i => i.Club)
+                .HasForeignKey(i => i.Id);
 
             modelBuilder
                 .Entity<ClubRelation>()
-                .HasOne(i => i.FirtClub)
-                .WithMany(i => i.ClubRelations);
+                .HasKey(i => new { i.FirstClubId, i.SecondClubId });
+
+            modelBuilder
+                .Entity<ClubRelation>()
+                .HasOne(i => i.FirstClub)
+                .WithMany(i => i.Relations)
+                .HasForeignKey(i => i.FirstClubId);
 
             modelBuilder
                 .Entity<ClubRelation>()
                 .HasOne(i => i.SecondClub)
-                .WithMany(i => i.ClubRelations);
+                .WithMany(i => i.Relations)
+                .HasForeignKey(i => i.SecondClubId);
 
-            //Work in progress
         }
     }
 }

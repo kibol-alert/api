@@ -7,7 +7,9 @@ namespace Kibol_Alert.Models
 {
     public class ClubRelation
     {
-        public Club FirtClub { get; set; }
+        public int FirstClubId { get; set; }
+        public Club FirstClub { get; set; }
+        public int SecondClubId { get; set; }
         public Club SecondClub { get; set; }
         enum RelationType
         {

@@ -14,7 +14,7 @@ namespace Kibol_Alert.Services
         {
         }
 
-        public Task<Response> AddClub(ClubRelationRequest request)
+        public Task<Response> AddClub(ClubRequest request)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +34,7 @@ namespace Kibol_Alert.Services
             throw new NotImplementedException();
         }
 
-        public Task<Response> EditClub(int id, ClubRelationRequest request)
+        public Task<Response> EditClub(int id, ClubRequest request)
         {
             throw new NotImplementedException();
         }
