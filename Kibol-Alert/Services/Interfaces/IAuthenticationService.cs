@@ -10,8 +10,8 @@ namespace Kibol_Alert.Services.Interfaces
     {
         Task<Response> Register(RegisterRequest request);
 
-        //Task<JwtToken> Login(LoginRequest request);
+        Task<Response> Login(LoginRequest request);
 
-        //Task<bool> Logout();
+        Task<Response> Logout();
     }
 }

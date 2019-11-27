@@ -38,7 +38,7 @@ namespace Kibol_Alert
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddDbContext<Kibol_AlertContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("Kibol_Alert")));
+               options.UseSqlServer(Configuration.GetConnectionString("Kibol-Alert")));
             
             
             services.AddIdentity<User, IdentityRole<int>>()
@@ -122,7 +122,7 @@ namespace Kibol_Alert
             });
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
-            }
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -26,12 +26,12 @@ namespace Kibol_Alert.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
         public async Task<IActionResult> Register(RegisterRequest request) => ResolveResponse( await _authenticationService.Register(request));
 
-        //[HttpPost]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiResponse))]
-        //public async Task<ApiResponse> Login(LoginRequest request) => => _authenticationService.Login(request);
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<JwtToken>))]
+        public async Task<IActionResult> Login(LoginRequest request) => ResolveResponse( await _authenticationService.Login(request));
 
-        //[HttpPost]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiResponse))]
-        //public async Task<ApiResponse> Logout() => => _authenticationService.Logout();
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
+        public async Task<IActionResult> Logout() => ResolveResponse( await _authenticationService.Logout());
     }
 }
