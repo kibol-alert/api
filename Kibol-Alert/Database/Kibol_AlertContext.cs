@@ -12,9 +12,8 @@ namespace Kibol_Alert.Database
         {
         }
 
+        public DbSet<ClubRelation> ClubRelations { get; set; }
         public DbSet<Club> Clubs { get; set; }
-        public DbSet<ClubRelation> ClubRelations {get; set;}
-    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,18 +41,19 @@ namespace Kibol_Alert.Database
 
             modelBuilder
                 .Entity<ClubRelation>()
-                .HasKey(i => new { i.FirstClubId, i.SecondClubId });
+                .HasKey(i => new { i.FirstClubId, i.SecondClubId, i.Relation });
 
             modelBuilder
                 .Entity<ClubRelation>()
                 .HasOne(i => i.FirstClub)
-                .WithMany(i => i.Relations)
-                .HasForeignKey(i => i.FirstClubId);
+                .WithMany(i => i.RelationsWith)
+                .HasForeignKey(i => i.FirstClubId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder
                 .Entity<ClubRelation>()
                 .HasOne(i => i.SecondClub)
-                .WithMany(i => i.Relations)
+                .WithMany(i => i.InRelationsWith)
                 .HasForeignKey(i => i.SecondClubId);
 
         }
