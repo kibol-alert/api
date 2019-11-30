@@ -122,14 +122,6 @@ namespace Kibol_Alert.Tests
             };
 
       
-
-        //[Theory]
-        //[InlineData("user", "Password123.", false)]
-        //public async void LoginTest(string username, string password, bool excepted)
-        //{
-        //    var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
-        //    Assert.Equal(result.Succeeded, excepted);
-        //}
         //[Fact]
         //public void LogoutTest()
         //{
