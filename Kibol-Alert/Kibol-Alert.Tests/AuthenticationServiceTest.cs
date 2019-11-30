@@ -95,6 +95,34 @@ namespace Kibol_Alert.Tests
                           null,
                           null);
         }
+        [Theory]
+        [MemberData(nameof(DataForLogin))]
+        public async void LoginTest(string username, string password) {
+            var request = new LoginRequest()
+            {
+                UserName = username,
+                Password = password
+
+            };
+
+            var result = await _authorizationService.Login(request);
+
+            Assert.True(result.Success);
+
+        }
+
+        public static IEnumerable<object[]> DataForLogin =>
+            new List<object[]>
+            {
+                new object[]{ 
+                    "test",
+                    "Test123."
+                    
+                }
+            };
+
+      
+
         //[Theory]
         //[InlineData("user", "Password123.", false)]
         //public async void LoginTest(string username, string password, bool excepted)
