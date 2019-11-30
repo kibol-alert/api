@@ -36,6 +36,7 @@ namespace Kibol_Alert.Services
             {
                 Email = request.Email,
                 UserName = request.UserName,
+                ClubId = request.ClubId
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);

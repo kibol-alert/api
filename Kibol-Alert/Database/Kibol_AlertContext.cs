@@ -5,7 +5,7 @@ using Kibol_Alert.Models;
 
 namespace Kibol_Alert.Database
 {
-    public class Kibol_AlertContext : IdentityDbContext<User, IdentityRole<int>, int>
+    public class Kibol_AlertContext : IdentityDbContext<User>
     {
         public Kibol_AlertContext(DbContextOptions<Kibol_AlertContext> options)
             : base(options)
@@ -36,8 +36,7 @@ namespace Kibol_Alert.Database
             modelBuilder
                 .Entity<Club>()
                 .HasMany(i => i.Fans)
-                .WithOne(i => i.Club)
-                .HasForeignKey(i => i.Id);
+                .WithOne(i => i.Club);
 
             modelBuilder
                 .Entity<ClubRelation>()

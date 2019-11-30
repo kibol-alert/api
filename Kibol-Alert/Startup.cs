@@ -41,7 +41,7 @@ namespace Kibol_Alert
                options.UseSqlServer(Configuration.GetConnectionString("Kibol-Alert")));
             
             
-            services.AddIdentity<User, IdentityRole<int>>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Kibol_AlertContext>();
 
             var appSettingsSection = Configuration.GetSection("AppSettings");
