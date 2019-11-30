@@ -117,15 +117,18 @@ namespace Kibol_Alert.Tests
                 new object[]{ 
                     "test",
                     "Test123."
-                    
                 }
             };
 
-      
-        //[Fact]
-        //public void LogoutTest()
-        //{
 
-        //}
+        [Fact]
+        public void LogoutTest()
+        {
+            //Given
+
+            //When
+
+            //Then
+        }
     }
 }
