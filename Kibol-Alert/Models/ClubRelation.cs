@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace Kibol_Alert.Models
 {
-    public class ClubRelations
+    public class ClubRelation
     {
         public Club FirtClub { get; set; }
         public Club SecondClub { get; set; }
-        //public enum RelationType
+        enum RelationType
+        {
+            Beef = 1,
+            Tie
+        }
     }
 }

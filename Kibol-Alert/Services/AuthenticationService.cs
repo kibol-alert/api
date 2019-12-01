@@ -24,48 +24,47 @@ namespace Kibol_Alert.Services
             _jwtHelper = jwtHelper;
         }
 
-        public async Task<ServiceResponse<bool>> Register(RegisterRequest request)
+        public async Task<bool> Register(RegisterRequest request)
         {
             if (Context.Users.Any(i => i.Email == request.Email))
-                return ServiceResponse<bool>.Error("Email Error");
+                return bool.Error("Email Error");
             if (request.Password != request.ConfirmedPassword)
-                return ServiceResponse<bool>.Error("Passwords are not the same");
+                return bool.Error("Passwords are not the same");
 
             var user = new User()
             {
                 Email = request.Email,
                 UserName = request.UserName,
-                Club = request.Club
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
             {
-                return ServiceResponse<bool>.Error();
+                return bool.Error();
             }
-            return ServiceResponse<bool>.Ok();
+            return bool.Ok();
         }
 
-        public async Task<ServiceResponse<JwtToken>> Login(LoginRequest request)
+        public async Task<JwtToken> Login(LoginRequest request)
         {
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 
             if (!result.Succeeded)
-                return ServiceResponse<JwtToken>.Error("Login failed");
+                return JwtToken.Error("Login failed");
 
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
             if (token == null)
             {
-                return ServiceResponse<JwtToken>.Error("User doesn't exist");
+                return JwtToken.Error("User doesn't exist");
             }
-            return ServiceResponse<JwtToken>.Ok(token);
+            return JwtToken.Ok(token);
         }
 
-        public async Task<ServiceResponse<bool>> Logout()
+        public async Task<bool> Logout()
         {
             await _signInManager.SignOutAsync();
-            return ServiceResponse<bool>.Ok();
+            return bool.Ok();
         }
     }
 }
