@@ -6,51 +6,49 @@ using System.Threading.Tasks;
 using Kibol_Alert.ViewModels;
 using Kibol_Alert.Services.Interfaces;
 using AutoWrapper.Wrappers;
-using Kibol_Alert.Responses;
-using Kibol_Alert.Requests;
+
 
 namespace Kibol_Alert.Controllers
-{
+{/*
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
-    public class ClubController : BaseController
+    public class ClubController:BaseController
     {
         private readonly IClubService _clubsService;
         public ClubController(IClubService clubService)
+           : base(responseFactory)
         {
             _clubsService = clubService;
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<List<ClubVM>>))]
-        public async Task<IActionResult> GetClubs(int skip, int take) => ResolveResponse(await _clubsService.GetClubs(skip, take));
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof())]
+        public async Task<ApiResponse> GetClubs(int skip, int take)
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<ClubVM>))]
-        public async Task<IActionResult> GetClub(int id) => ResolveResponse(await _clubsService.GetClub(id));
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof))]
+        public async Task<IActionResult> GetClub(int id)
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof())]
+        public async Task<IActionResult> AddClub(string name, string logoUri)
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof())]
+        public async Task<IActionResult> DeleteClub(string name, string logoUri)
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof())]
+        public async Task<IActionResult> EditClub(string name, string logoUri)
+        
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClubVM>))]
+        public async Task<IActionResult> AddRelation(string name, string logoUri)
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> AddClub(ClubRequest request) => ResolveResponse(await _clubsService.AddClub(request));
-
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> DeleteClub(int id) => ResolveResponse(await _clubsService.DeleteClub(id));
-
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<ClubVM>))]
-        public async Task<IActionResult> EditClub(int id, ClubRequest request) => ResolveResponse(await _clubsService.EditClub(id, request));
-
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> AddRelation(ClubRelationRequest request) => ResolveResponse(await _clubsService.AddRelation(request));
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> DeleteRelation(int id) => ResolveResponse(await _clubsService.DeleteRelation(id));
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClubVM>))]
+        public async Task<IActionResult> DeleteRelation(string name, string logoUri)
     }
+    */
 }

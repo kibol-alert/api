@@ -11,9 +11,8 @@ namespace Kibol_Alert.Models
         public string Name { get; set; }
         public string League { get; set; }
         public string LogoUri { get; set; }
-        public ICollection<ClubRelation> RelationsWith {get; set;}
-        public ICollection<ClubRelation> InRelationsWith { get; set; }
-        public ICollection<User> Fans { get; set; }
+        public virtual ICollection<ClubRelation> ClubRelations {get; set;}
+        public virtual ICollection<User> Fans { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

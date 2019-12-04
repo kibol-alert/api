@@ -6,10 +6,14 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Kibol_Alert.Models;
 using System;
+<<<<<<< HEAD
 using Kibol_Alert.Database;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+=======
+using System.Threading;
+>>>>>>> 9f3df8fd36da9c4a3d10606cc334651f8e075636
 
 namespace Kibol_Alert.Tests
 {
@@ -24,6 +28,7 @@ namespace Kibol_Alert.Tests
                 new Mock<ILookupNormalizer>().Object,
                 new Mock<IdentityErrorDescriber>().Object,
                 new Mock<IServiceProvider>().Object,
+<<<<<<< HEAD
                 new Mock<ILogger<UserManager<User>>>().Object
                 )
         {
@@ -31,6 +36,12 @@ namespace Kibol_Alert.Tests
 
     }
 
+=======
+                new Mock<ILogger<UserManager<User>>>().Object)
+        {
+        }
+    }
+>>>>>>> 9f3df8fd36da9c4a3d10606cc334651f8e075636
     public class FakeSignInManager : SignInManager<User>
     {
         public FakeSignInManager()

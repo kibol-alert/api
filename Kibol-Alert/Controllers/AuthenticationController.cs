@@ -6,12 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using AutoWrapper.Wrappers;
-using Kibol_Alert.Responses;
-using System.Net;
 
 namespace Kibol_Alert.Controllers
 {
     [Produces("application/json")]
+    [ApiController]
     [AllowAnonymous]
     public class AuthenticationController : BaseController
     {
@@ -23,15 +22,15 @@ namespace Kibol_Alert.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> Register(RegisterRequest request) => ResolveResponse( await _authenticationService.Register(request));
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ApiResponse> Register(RegisterRequest request)
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<JwtToken>))]
-        public async Task<IActionResult> Login(LoginRequest request) => ResolveResponse( await _authenticationService.Login(request));
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ApiResponse> Login(LoginRequest request)
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> Logout() => ResolveResponse( await _authenticationService.Logout());
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof())]
+        public async Task<ApiResponse> LogoutAsync()
     }
 }

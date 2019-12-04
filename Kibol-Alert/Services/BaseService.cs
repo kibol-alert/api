@@ -1,6 +1,4 @@
 ﻿using Kibol_Alert.Database;
-using Kibol_Alert.Responses;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kibol_Alert.Services
 {
@@ -12,6 +10,5 @@ namespace Kibol_Alert.Services
         {
             Context = context;
         }
-
     }
 }
