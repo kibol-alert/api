@@ -36,8 +36,10 @@ namespace Kibol_Alert.Services
         {
             var clubRelation = new ClubRelation()
             {
+                FirstClubId = request.FirstClub.Id,
                 FirstClub = request.FirstClub,
-                SecondClub = request.SecondClub 
+                SecondClubId = request.SecondClub.Id,
+                SecondClub = request.SecondClub
             };
 
             await Context.ClubRelations.AddAsync(clubRelation);
@@ -86,7 +88,7 @@ namespace Kibol_Alert.Services
 
             Context.Clubs.Update(club);
             await Context.SaveChangesAsync();
-            return new SuccessResponse<bool>(true);
+            return new SuccessResponse<ClubVM>(true);
         }
 
         public async Task<Response> GetClub(int id)
