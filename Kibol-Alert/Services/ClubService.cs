@@ -1,9 +1,12 @@
-﻿
-using Kibol_Alert.Database;
+﻿using Kibol_Alert.Database;
+using Kibol_Alert.Models;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
+using Kibol_Alert.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Kibol_Alert.Services
@@ -14,33 +17,106 @@ namespace Kibol_Alert.Services
         {
         }
 
-        public Task<Response> AddClub(ClubRequest request)
+        public async Task<Response> AddClub(ClubRequest request)
         {
-            throw new NotImplementedException();
+            var club = new Club()
+            {
+                Name = request.Name,
+                League = request.League,
+                LogoUri = request.LogoUri
+            };
+
+            await Context.Clubs.AddAsync(club);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> AddRelation(ClubRelationRequest request)
+        //Do edycji
+        public async Task<Response> AddRelation(ClubRelationRequest request)
         {
-            throw new NotImplementedException();
+            var clubRelation = new ClubRelation()
+            {
+                FirstClub = request.FirstClub,
+                SecondClub = request.SecondClub 
+            };
+
+            await Context.ClubRelations.AddAsync(clubRelation);
+            await Context.SaveChangesAsync();
+
+            return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> DeleteClub(int id)
+        public async Task<Response> DeleteClub(int id)
         {
-            throw new NotImplementedException();
+            var club = await Context.Clubs.FindAsync(id);
+            if (club == null)
+            {
+                return new ErrorResponse("Club not found!");
+            }
+            Context.Clubs.Remove(club);
+            await Context.SaveChangesAsync();
+            
+            return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> DeleteRelation(int id)
+        public async Task<Response> DeleteRelation(int id)
         {
-            throw new NotImplementedException();
+            var clubRelation = await Context.ClubRelations.FindAsync(id);
+            if (clubRelation == null)
+            {
+                return new ErrorResponse("Relation not found!");
+            }
+            Context.ClubRelations.Remove(clubRelation);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> EditClub(int id, ClubRequest request)
+        public async Task<Response> EditClub(int id, ClubRequest request)
         {
-            throw new NotImplementedException();
+            var club = await Context.Clubs.FindAsync(id);
+
+            if (club == null)
+            {
+                return new ErrorResponse("Club not found!");
+            }
+
+            club.Name = request.Name;
+            club.League = request.League;
+            club.LogoUri = request.LogoUri;
+
+            Context.Clubs.Update(club);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> GetClub(int id)
+        public async Task<Response> GetClub(int id)
         {
+            /*
+            var club = await Context.Clubs
+                .Include(i => i.RelationsWith)
+                .Include(i => i.InRelationsWith)
+                .Include(i => i.Fans)
+                .FirstOrDefaultAsync(i => !i.IsDeleted && i.Id == id);
+
+            var clubVm = new ClubVM()
+            {
+                Id = club.Id,
+                Name = club.Name,
+                League = club.League,
+                LogoUri = club.LogoUri,
+                ClubRelations = club.RelationsWith,
+                InRelationsWith = club.InRelationsWith,
+
+                Fans = club.Fans.Select(row => new UserVM()
+                {
+                    UserId = row.Club.Fans.
+                    UserName = row.User.UserName,
+                    AvatarUrl = row.User.AvatarUrl
+                }).ToListAsync()
+            };
+
+            return new SuccessResponse<bool>(true);
+            */
             throw new NotImplementedException();
         }
 
@@ -49,5 +125,4 @@ namespace Kibol_Alert.Services
             throw new NotImplementedException();
         }
     }
-
 }

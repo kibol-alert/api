@@ -54,7 +54,6 @@ namespace Kibol_Alert.Database
                 .HasOne(i => i.SecondClub)
                 .WithMany(i => i.InRelationsWith)
                 .HasForeignKey(i => i.SecondClubId);
-
         }
     }
 }
