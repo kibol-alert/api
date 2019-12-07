@@ -5,7 +5,7 @@ using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,7 +31,7 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        //Do edycji
+        //??
         public async Task<Response> AddRelation(ClubRelationRequest request)
         {
             var clubRelation = new ClubRelation()
@@ -88,43 +88,70 @@ namespace Kibol_Alert.Services
 
             Context.Clubs.Update(club);
             await Context.SaveChangesAsync();
-            return new SuccessResponse<ClubVM>(true);
+            return new SuccessResponse<ClubVM>();
         }
 
         public async Task<Response> GetClub(int id)
         {
-            /*
+
             var club = await Context.Clubs
                 .Include(i => i.RelationsWith)
                 .Include(i => i.InRelationsWith)
                 .Include(i => i.Fans)
                 .FirstOrDefaultAsync(i => !i.IsDeleted && i.Id == id);
 
-            var clubVm = new ClubVM()
+            var clubDto = new ClubVM()
             {
                 Id = club.Id,
                 Name = club.Name,
                 League = club.League,
                 LogoUri = club.LogoUri,
-                ClubRelations = club.RelationsWith,
-                InRelationsWith = club.InRelationsWith,
+                ClubRelations = club.RelationsWith, //?
+                InRelationsWith = club.InRelationsWith, //?
 
                 Fans = club.Fans.Select(row => new UserVM()
                 {
-                    UserId = row.Club.Fans.
-                    UserName = row.User.UserName,
-                    AvatarUrl = row.User.AvatarUrl
-                }).ToListAsync()
+                    UserId = int.Parse(row.Id.ToString()), //?
+                    UserName = row.UserName,
+                    Email = row.Email,
+                    Club = row.Club, //?
+                    IsBanned = row.IsBanned
+                }).ToList(),
             };
 
-            return new SuccessResponse<bool>(true);
-            */
-            throw new NotImplementedException();
+            return new SuccessResponse<ClubVM>();
         }
 
-        public Task<Response> GetClubs(int skip, int take)
+        public async Task<Response> GetClubs(int skip, int take)
         {
-            throw new NotImplementedException();
+            var clubs = await Context.Clubs
+                .Where(i => !i.IsDeleted)
+                .OrderByDescending(row => row)
+                .Skip(skip)
+                .Take(take)
+                .Include(i => i.RelationsWith)
+                .Include(i => i.InRelationsWith)
+                .Include(i => i.Fans)
+                .Select(row => new ClubVM()
+                {
+                    Id = row.Id,
+                    Name = row.Name,
+                    League = row.League,
+                    LogoUri = row.LogoUri,
+                    ClubRelations = row.RelationsWith, //?
+                    InRelationsWith = row.InRelationsWith, //?
+
+                    Fans = row.Fans.Select(row => new UserVM()
+                    {
+                        UserId = int.Parse(row.Id.ToString()), //?
+                        UserName = row.UserName,
+                        Email = row.Email,
+                        Club = row.Club, //?
+                        IsBanned = row.IsBanned
+                    }).ToList(),
+                }).ToListAsync();
+
+            return new SuccessResponse<List<ClubVM>>();
         }
     }
 }
