@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Kibol_Alert.Models
+﻿namespace Kibol_Alert.ViewModels
 {
-    public class ClubRelation
+    public class ClubRelationVM
     {
         public int Id { get; set; }
         public int FirstClubId { get; set; }
-        public Club FirstClub { get; set; }
+        public ClubVM FirstClub { get; set; }
         public int SecondClubId { get; set; }
-        public Club SecondClub { get; set; }
+        public ClubVM SecondClub { get; set; }
         public RelationType Relation { get; set; }
     }
 

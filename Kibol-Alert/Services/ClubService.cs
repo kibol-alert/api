@@ -31,15 +31,12 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        //??
         public async Task<Response> AddRelation(ClubRelationRequest request)
         {
             var clubRelation = new ClubRelation()
             {
                 FirstClubId = request.FirstClub.Id,
-                FirstClub = request.FirstClub,
                 SecondClubId = request.SecondClub.Id,
-                SecondClub = request.SecondClub
             };
 
             await Context.ClubRelations.AddAsync(clubRelation);
@@ -50,12 +47,12 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> DeleteClub(int id)
         {
-            var club = await Context.Clubs.FindAsync(id);
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
             if (club == null)
             {
                 return new ErrorResponse("Club not found!");
             }
-            Context.Clubs.Remove(club);
+            club.IsDeleted = true;
             await Context.SaveChangesAsync();
             
             return new SuccessResponse<bool>(true);
@@ -63,7 +60,7 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> DeleteRelation(int id)
         {
-            var clubRelation = await Context.ClubRelations.FindAsync(id);
+            var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.Id == id);
             if (clubRelation == null)
             {
                 return new ErrorResponse("Relation not found!");
@@ -75,7 +72,7 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> EditClub(int id, ClubRequest request)
         {
-            var club = await Context.Clubs.FindAsync(id);
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
 
             if (club == null)
             {
@@ -106,16 +103,21 @@ namespace Kibol_Alert.Services
                 Name = club.Name,
                 League = club.League,
                 LogoUri = club.LogoUri,
-                ClubRelations = club.RelationsWith, //?
-                InRelationsWith = club.InRelationsWith, //?
 
-                Fans = club.Fans.Select(row => new UserVM()
+                ClubRelations = club.RelationsWith.Select(row => new ClubRelationVM()
+                { 
+                    FirstClubId = row.FirstClubId,
+                }) .ToList(),
+
+                InRelationsWith = club.InRelationsWith.Select(row => new ClubRelationVM()
                 {
-                    UserId = int.Parse(row.Id.ToString()), //?
-                    UserName = row.UserName,
-                    Email = row.Email,
-                    Club = row.Club, //?
-                    IsBanned = row.IsBanned
+                    SecondClubId = row.SecondClubId,
+                }).ToList(),
+
+                Fans = club.Fans.Select(row => new MemberVM()
+                {
+                    MemberId = row.Id,
+                    Name = row.UserName,
                 }).ToList(),
             };
 
@@ -138,16 +140,20 @@ namespace Kibol_Alert.Services
                     Name = row.Name,
                     League = row.League,
                     LogoUri = row.LogoUri,
-                    ClubRelations = row.RelationsWith, //?
-                    InRelationsWith = row.InRelationsWith, //?
-
-                    Fans = row.Fans.Select(row => new UserVM()
+                    ClubRelations = row.RelationsWith.Select(row => new ClubRelationVM()
                     {
-                        UserId = int.Parse(row.Id.ToString()), //?
-                        UserName = row.UserName,
-                        Email = row.Email,
-                        Club = row.Club, //?
-                        IsBanned = row.IsBanned
+                        FirstClubId = row.FirstClubId,
+                    }).ToList(),
+
+                    InRelationsWith = row.InRelationsWith.Select(row => new ClubRelationVM()
+                    {
+                        SecondClubId = row.SecondClubId,
+                    }).ToList(),
+
+                    Fans = row.Fans.Select(row => new MemberVM()
+                    {
+                        MemberId = row.Id,
+                        Name = row.UserName,
                     }).ToList(),
                 }).ToListAsync();
 
