@@ -7,7 +7,6 @@ namespace Kibol_Alert.Models
 {
     public class ClubRelation
     {
-        public int Id { get; set; }
         public int FirstClubId { get; set; }
         public Club FirstClub { get; set; }
         public int SecondClubId { get; set; }

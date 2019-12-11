@@ -2,7 +2,6 @@
 {
     public class ClubRelationVM
     {
-        public int Id { get; set; }
         public int FirstClubId { get; set; }
         public ClubVM FirstClub { get; set; }
         public int SecondClubId { get; set; }

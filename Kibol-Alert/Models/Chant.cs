@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Kibol_Alert.Models
 {
-    public class Chants
+    public class Chant
     {
         public int Id { get; set; }
         public Club Club { get; set; }

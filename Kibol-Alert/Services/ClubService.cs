@@ -60,7 +60,7 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> DeleteRelation(int id)
         {
-            var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.Id == id);
+            var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClub.Id == id);
             if (clubRelation == null)
             {
                 return new ErrorResponse("Relation not found!");
@@ -109,10 +109,12 @@ namespace Kibol_Alert.Services
                     FirstClubId = row.FirstClubId,
                 }) .ToList(),
 
+                /*
                 InRelationsWith = club.InRelationsWith.Select(row => new ClubRelationVM()
                 {
                     SecondClubId = row.SecondClubId,
                 }).ToList(),
+                */
 
                 Fans = club.Fans.Select(row => new MemberVM()
                 {
@@ -145,10 +147,12 @@ namespace Kibol_Alert.Services
                         FirstClubId = row.FirstClubId,
                     }).ToList(),
 
+                    /*
                     InRelationsWith = row.InRelationsWith.Select(row => new ClubRelationVM()
                     {
                         SecondClubId = row.SecondClubId,
                     }).ToList(),
+                    */
 
                     Fans = row.Fans.Select(row => new MemberVM()
                     {
