@@ -8,7 +8,7 @@ namespace Kibol_Alert.Requests
 {
     public class ClubRelationRequest
     {
-        public Club FirstClub { get; set; }
-        public Club SecondClub { get; set; }
+        public int FirstClubId { get; set; }
+        public int SecondClubId { get; set; }
     }
 }

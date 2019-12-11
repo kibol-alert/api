@@ -35,8 +35,8 @@ namespace Kibol_Alert.Services
         {
             var clubRelation = new ClubRelation()
             {
-                FirstClubId = request.FirstClub.Id,
-                SecondClubId = request.SecondClub.Id,
+                FirstClubId = request.FirstClubId,
+                SecondClubId = request.SecondClubId,
             };
 
             await Context.ClubRelations.AddAsync(clubRelation);
