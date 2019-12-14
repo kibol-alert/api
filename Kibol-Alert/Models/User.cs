@@ -8,5 +8,6 @@ namespace Kibol_Alert.Models
         public virtual Club Club { get; set; }
         public bool IsDeleted { get; set; } = false;
         public bool IsBanned { get; set; } = false;
+        public bool IsAdmin { get; set; } = false;
     }
 }

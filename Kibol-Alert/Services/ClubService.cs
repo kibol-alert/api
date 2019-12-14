@@ -103,6 +103,7 @@ namespace Kibol_Alert.Services
                 Name = club.Name,
                 League = club.League,
                 LogoUri = club.LogoUri,
+                City = club.City,
 
                 ClubRelations = club.RelationsWith.Select(row => new ClubRelationVM()
                 { 
@@ -142,6 +143,7 @@ namespace Kibol_Alert.Services
                     Name = row.Name,
                     League = row.League,
                     LogoUri = row.LogoUri,
+                    City = row.City,
                     ClubRelations = row.RelationsWith.Select(row => new ClubRelationVM()
                     {
                         FirstClubId = row.FirstClubId,

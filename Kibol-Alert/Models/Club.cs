@@ -7,6 +7,7 @@ namespace Kibol_Alert.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string League { get; set; }
+        public string City { get; set; }
         public string LogoUri { get; set; }
         public ICollection<ClubRelation> RelationsWith { get; set;}
         public ICollection<ClubRelation> InRelationsWith { get; set; }
