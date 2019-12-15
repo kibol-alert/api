@@ -71,6 +71,11 @@ namespace Kibol_Alert.Database
                 .HasForeignKey(i => i.SecondClubId);
 
             modelBuilder
+                .Entity<Brawl>()
+                .HasOne(i => i.Location)
+                .WithMany(i => i.Brawls);
+
+            modelBuilder
                 .Entity<ClubRelation>()
                 .HasKey(i => new { i.FirstClubId, i.SecondClubId, i.Relation });
 

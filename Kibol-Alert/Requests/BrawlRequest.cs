@@ -8,6 +8,7 @@ namespace Kibol_Alert.Requests
         public int FirstClubId { get; set; }
         public int SecondClubId { get; set; }
         public DateTime Date { get; set; }
-        public Location Location { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
     }
 }

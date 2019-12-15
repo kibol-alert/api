@@ -25,7 +25,11 @@ namespace Kibol_Alert.Services
                 FirstClubId = request.FirstClubId,
                 SecondClubId = request.SecondClubId,
                 Date = request.Date,
-                Location = request.Location
+                Location = new Location()
+                {
+                    Latitude = request.Latitude,
+                    Longitude = request.Longitude
+                }
             };
             await Context.Brawls.AddAsync(brawl);
             await Context.SaveChangesAsync();
@@ -46,26 +50,65 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> EditBrawl(int id, BrawlRequest request)
         {
-            var brawl = new Brawl()
+            var brawl = await Context.Brawls.FirstOrDefaultAsync(i => i.Id == id);
+            if (brawl == null)
             {
-                FirstClubId = request.FirstClubId,
-                SecondClubId = request.SecondClubId,
-                Date = request.Date,
-                Location = request.Location
+                return new ErrorResponse("Brawl not found!");
+            }
+
+            brawl.FirstClubId = request.FirstClubId;
+            brawl.SecondClubId = request.SecondClubId;
+            brawl.Date = request.Date;
+            brawl.Location = new Location()
+            {
+                Latitude = request.Latitude,
+                Longitude = request.Longitude
             };
+            
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
             return new SuccessResponse<BrawlVM>();
         }
 
-        public Task<Response> GetBrawl(int id)
+        public async Task<Response> GetBrawl(int id)
         {
-            throw new NotImplementedException();
+            var brawl = await Context.Brawls
+                .Include(i => i.FirstClub)
+                .Include(i => i.SecondClub)
+                .Include(i => i.Location)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
+            var bralwDto = new BrawlVM()
+            {
+                Id = brawl.Id,
+                FirstClubId = brawl.FirstClubId,
+                SecondClubId = brawl.SecondClubId,
+                Date = brawl.Date,
+                Location = brawl.Location
+            };
+
+            return new SuccessResponse<BrawlVM>();
         }
 
-        public Task<Response> GetBrawls(int skip, int take)
+        public async Task<Response> GetBrawls(int skip, int take)
         {
-            throw new NotImplementedException();
+            var brawls = await Context.Brawls
+                .OrderByDescending(row => row)
+                .Skip(skip)
+                .Take(take)
+                .Include(i => i.FirstClub)
+                .Include(i => i.SecondClub)
+                .Include(i => i.Location)
+                .Select(row => new BrawlVM()
+                {
+                    Id = row.Id,
+                    FirstClubId = row.FirstClubId,
+                    SecondClubId = row.SecondClubId,
+                    Date = row.Date,
+                    Location = row.Location
+                }).ToListAsync();
+
+            return new SuccessResponse<List<BrawlVM>>();
         }
     }
 }
