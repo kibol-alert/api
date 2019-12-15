@@ -31,6 +31,41 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
+        public async Task<Response> AddChant(ClubChantRequest request)
+        {
+            var chant = new Chant();
+            {
+                chant.Lyrics = request.Lyrics;
+            };
+            await Context.Chants.AddAsync(chant);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> EditChant(int id, ClubChantRequest request)
+        {
+            var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
+            if (chant == null)
+            {
+                return new ErrorResponse("Chant not found!");
+            }
+            chant.Lyrics = request.Lyrics;
+            Context.Chants.Update(chant);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> DeleteChant(int id)
+        {
+            var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
+            if (chant == null)
+            {
+                return new ErrorResponse("Chant not found!");
+            }
+            Context.Chants.Remove(chant);
+            return new SuccessResponse<bool>(true);
+        }
+
         public async Task<Response> AddRelation(ClubRelationRequest request)
         {
             var clubRelation = new ClubRelation()
@@ -44,6 +79,8 @@ namespace Kibol_Alert.Services
 
             return new SuccessResponse<bool>(true);
         }
+
+        
 
         public async Task<Response> DeleteClub(int id)
         {
@@ -70,6 +107,8 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
+        
+
         public async Task<Response> EditClub(int id, ClubRequest request)
         {
             var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
@@ -95,6 +134,7 @@ namespace Kibol_Alert.Services
                 .Include(i => i.RelationsWith)
                 .Include(i => i.InRelationsWith)
                 .Include(i => i.Fans)
+                .Include(i => i.Chants)
                 .FirstOrDefaultAsync(i => !i.IsDeleted && i.Id == id);
 
             var clubDto = new ClubVM()
@@ -104,6 +144,7 @@ namespace Kibol_Alert.Services
                 League = club.League,
                 LogoUri = club.LogoUri,
                 City = club.City,
+                Chants = club.Chants,
 
                 ClubRelations = club.RelationsWith.Select(row => new ClubRelationVM()
                 { 

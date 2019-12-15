@@ -14,6 +14,7 @@ namespace Kibol_Alert.ViewModels
         public string City { get; set; }
         public virtual ICollection<ClubRelationVM> ClubRelations { get; set; }
         public virtual ICollection<MemberVM> Fans { get; set; }
+        public virtual ICollection<Chant> Chants { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

@@ -15,5 +15,8 @@ namespace Kibol_Alert.Services.Interfaces
         public Task<Response> EditClub(int id, ClubRequest request);
         public Task<Response> AddRelation(ClubRelationRequest request);
         public Task<Response> DeleteRelation(int id);
+        public Task<Response> AddChant(ClubChantRequest request);
+        public Task<Response> EditChant(int id, ClubChantRequest request);
+        public Task<Response> DeleteChant(int id);
     }
 }
