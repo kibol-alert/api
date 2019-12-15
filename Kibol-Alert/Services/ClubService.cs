@@ -80,8 +80,6 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        
-
         public async Task<Response> DeleteClub(int id)
         {
             var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
@@ -106,8 +104,6 @@ namespace Kibol_Alert.Services
             await Context.SaveChangesAsync();
             return new SuccessResponse<bool>(true);
         }
-
-        
 
         public async Task<Response> EditClub(int id, ClubRequest request)
         {
