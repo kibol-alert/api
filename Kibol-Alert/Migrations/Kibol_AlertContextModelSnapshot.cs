@@ -14,6 +14,7 @@ namespace Kibol_Alert.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+        //    modelBuilder.Initialize();
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.0.1")
@@ -344,33 +345,6 @@ namespace Kibol_Alert.Migrations
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
-
-            modelBuilder.Entity<Club>()
-                .HasData
-                (
-                    new Club { Name = "Arka Gdynia", League = "Ekstraklasa", City = "Gdynia"},
-                    new Club { Name = "Cracovia", League = "Ekstraklasa", City = "Kraków" },
-                    new Club { Name = "Górnik Zabrze", League = "Ekstraklasa", City = "Zabrze" },
-                    new Club { Name = "Jagiellonia Białystok", League = "Ekstraklasa", City = "Białystok" },
-                    new Club { Name = "KGHM Zagłębie Lubin", League = "Ekstraklasa", City = "Lubin" },
-                    new Club { Name = "Korona Kielce", League = "Ekstraklasa", City = "Kielce" },
-                    new Club { Name = "Lech Poznań", League = "Ekstraklasa", City = "Poznań" },
-                    new Club { Name = "Lechia Gdańsk", League = "Ekstraklasa", City = "Gdańsk" },
-                    new Club { Name = "Legia Warszawa", League = "Ekstraklasa", City = "Warszawa" },
-                    new Club { Name = "ŁKS Łódź", League = "Ekstraklasa", City = "Łódź" },
-                    new Club { Name = "Piast Gliwice", League = "Ekstraklasa", City = "Gliwice" },
-                    new Club { Name = "Pogoń Szczecin", League = "Ekstraklasa", City = "Szczecin" },
-                    new Club { Name = "Raków Częstochowa", League = "Ekstraklasa", City = "Częstochowa" },
-                    new Club { Name = "Śląsk Wrocław", League = "Ekstraklasa", City = "Wrocław" },
-                    new Club { Name = "Wisła Kraków", League = "Ekstraklasa", City = "Kraków" },
-                    new Club { Name = "Wisła Płock", League = "Ekstraklasa", City = "Płock" }
-                );
-
-            modelBuilder.Entity<User>()
-                .HasData
-                (
-                    new User { UserName = "Admin", NormalizedUserName = "Admin", Email = "admin@example.com", NormalizedEmail = "admin@example.com", IsAdmin = true, EmailConfirmed = true}
-                );
         }
     }
 }

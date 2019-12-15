@@ -110,13 +110,6 @@ namespace Kibol_Alert.Services
                     FirstClubId = row.FirstClubId,
                 }) .ToList(),
 
-                /*
-                InRelationsWith = club.InRelationsWith.Select(row => new ClubRelationVM()
-                {
-                    SecondClubId = row.SecondClubId,
-                }).ToList(),
-                */
-
                 Fans = club.Fans.Select(row => new MemberVM()
                 {
                     MemberId = row.Id,
@@ -148,13 +141,6 @@ namespace Kibol_Alert.Services
                     {
                         FirstClubId = row.FirstClubId,
                     }).ToList(),
-
-                    /*
-                    InRelationsWith = row.InRelationsWith.Select(row => new ClubRelationVM()
-                    {
-                        SecondClubId = row.SecondClubId,
-                    }).ToList(),
-                    */
 
                     Fans = row.Fans.Select(row => new MemberVM()
                     {
