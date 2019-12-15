@@ -1,6 +1,4 @@
-﻿using Kibol_Alert.ViewModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Responses;
 

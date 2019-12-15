@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Kibol_Alert.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Kibol_Alert.Models
+namespace Kibol_Alert.Requests
 {
-    public class Brawl
+    public class BrawlRequest
     {
-        public int Id { get; set; }
-        public Club FirstClub { get; set; }
         public int FirstClubId { get; set; }
-        public Club SecondClub { get; set; }
         public int SecondClubId { get; set; }
         public DateTime Date { get; set; }
         public Location Location { get; set; }

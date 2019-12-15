@@ -15,6 +15,7 @@ namespace Kibol_Alert.Database
         public DbSet<ClubRelation> ClubRelations { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Chant> Chants { get; set; }
+        public DbSet<Brawl> Brawls { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +53,22 @@ namespace Kibol_Alert.Database
                 .Entity<Chant>()
                 .HasOne(i => i.Club)
                 .WithMany(i => i.Chants);
+
+            modelBuilder
+                .Entity<Brawl>()
+                .HasKey(i => i.Id);
+
+            modelBuilder
+                .Entity<Brawl>()
+                .HasOne(i => i.FirstClub)
+                .WithMany(i => i.Brawls)
+                .HasForeignKey(i => i.FirstClubId);
+
+            modelBuilder
+                .Entity<Brawl>()
+                .HasOne(i => i.SecondClub)
+                .WithMany(i => i.Brawls)
+                .HasForeignKey(i => i.SecondClubId);
 
             modelBuilder
                 .Entity<ClubRelation>()
