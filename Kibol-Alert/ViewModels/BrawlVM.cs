@@ -6,10 +6,8 @@ namespace Kibol_Alert.ViewModels
     public class BrawlVM
     {
         public int Id { get; set; }
-        public ClubVM FirstClub { get; set; }
-        public int FirstClubId { get; set; }
-        public ClubVM SecondClub { get; set; }
-        public int SecondClubId { get; set; }
+        public string FirstClubName { get; set; }
+        public string SecondClubName { get; set; }
         public DateTime Date { get; set; }
         public Location Location { get; set; }
     }

@@ -5,10 +5,9 @@ namespace Kibol_Alert.Requests
 {
     public class BrawlRequest
     {
-        public int FirstClubId { get; set; }
-        public int SecondClubId { get; set; }
+        public string FirstClubName { get; set; }
+        public string SecondClubName { get; set; }
         public DateTime Date { get; set; }
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
+        public Location Location { get; set; }
     }
 }

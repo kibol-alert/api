@@ -26,9 +26,7 @@ namespace Kibol_Alert.Tests
                 new Mock<IServiceProvider>().Object,
                 new Mock<ILogger<UserManager<User>>>().Object
                 )
-        {
-        }
-
+        { }
     }
 
     public class FakeSignInManager : SignInManager<User>

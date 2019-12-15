@@ -22,14 +22,10 @@ namespace Kibol_Alert.Services
         {
             var brawl = new Brawl()
             {
-                FirstClubId = request.FirstClubId,
-                SecondClubId = request.SecondClubId,
+                FirstClubName = request.FirstClubName,
+                SecondClubName = request.SecondClubName,
                 Date = request.Date,
-                Location = new Location()
-                {
-                    Latitude = request.Latitude,
-                    Longitude = request.Longitude
-                }
+                Location = request.Location
             };
             await Context.Brawls.AddAsync(brawl);
             await Context.SaveChangesAsync();
@@ -56,14 +52,10 @@ namespace Kibol_Alert.Services
                 return new ErrorResponse("Brawl not found!");
             }
 
-            brawl.FirstClubId = request.FirstClubId;
-            brawl.SecondClubId = request.SecondClubId;
+            brawl.FirstClubName = request.FirstClubName;
+            brawl.SecondClubName = request.SecondClubName;
             brawl.Date = request.Date;
-            brawl.Location = new Location()
-            {
-                Latitude = request.Latitude,
-                Longitude = request.Longitude
-            };
+            brawl.Location = request.Location;
             
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
@@ -73,16 +65,14 @@ namespace Kibol_Alert.Services
         public async Task<Response> GetBrawl(int id)
         {
             var brawl = await Context.Brawls
-                .Include(i => i.FirstClub)
-                .Include(i => i.SecondClub)
                 .Include(i => i.Location)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
             var bralwDto = new BrawlVM()
             {
                 Id = brawl.Id,
-                FirstClubId = brawl.FirstClubId,
-                SecondClubId = brawl.SecondClubId,
+                FirstClubName = brawl.FirstClubName,
+                SecondClubName = brawl.SecondClubName,
                 Date = brawl.Date,
                 Location = brawl.Location
             };
@@ -96,14 +86,12 @@ namespace Kibol_Alert.Services
                 .OrderByDescending(row => row)
                 .Skip(skip)
                 .Take(take)
-                .Include(i => i.FirstClub)
-                .Include(i => i.SecondClub)
                 .Include(i => i.Location)
                 .Select(row => new BrawlVM()
                 {
                     Id = row.Id,
-                    FirstClubId = row.FirstClubId,
-                    SecondClubId = row.SecondClubId,
+                    FirstClubName = row.FirstClubName,
+                    SecondClubName = row.SecondClubName,
                     Date = row.Date,
                     Location = row.Location
                 }).ToListAsync();
