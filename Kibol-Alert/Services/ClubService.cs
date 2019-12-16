@@ -161,7 +161,6 @@ namespace Kibol_Alert.Services
         {
             var clubs = await Context.Clubs
                 .Where(i => !i.IsDeleted)
-                .OrderByDescending(row => row)
                 .Skip(skip)
                 .Take(take)
                 .Include(i => i.RelationsWith)
@@ -186,7 +185,7 @@ namespace Kibol_Alert.Services
                     }).ToList(),
                 }).ToListAsync();
 
-            return new SuccessResponse<List<ClubVM>>();
+            return new SuccessResponse<List<ClubVM>>(clubs);
         }
     }
 }

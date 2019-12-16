@@ -13,7 +13,7 @@ namespace Kibol_Alert.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     public class ClubController : BaseController
     {
         private readonly IClubService _clubsService;

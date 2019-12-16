@@ -72,6 +72,8 @@ namespace Kibol_Alert
 
             services.AddScoped<IJwtHelper, JwtHelper>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IBrawlService, BrawlService>();
+            services.AddScoped<IClubService, ClubService>();
 
 
             services.AddSwaggerDocument(document =>
@@ -88,11 +90,11 @@ namespace Kibol_Alert
                 }));
             });
 
-            services.AddAuthentication().AddFacebook(o =>
-            {
-                o.AppId = this.Configuration["Authentication:CoderPro:Facebook:AppId"];
-                o.AppSecret = this.Configuration["Authentication:CoderPro:Facebook:AppSecret"];
-            });
+            //services.AddAuthentication().AddFacebook(o =>
+            //{
+            //    o.AppId = this.Configuration["Authentication:CoderPro:Facebook:AppId"];
+            //    o.AppSecret = this.Configuration["Authentication:CoderPro:Facebook:AppSecret"];
+            //});
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

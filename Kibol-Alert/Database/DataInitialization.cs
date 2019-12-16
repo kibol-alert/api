@@ -26,7 +26,7 @@ namespace Kibol_Alert.Database
                     UserName = "Admin",
                     Email = "admin@admin.com",
                     IsAdmin = true,
-                    ClubId = null
+                    ClubId = _context.Clubs.FirstOrDefault(i => i.Name == "Cracovia").Id
                 };
 
                 var result = _userManager.CreateAsync(user, "Password123.").Result;
