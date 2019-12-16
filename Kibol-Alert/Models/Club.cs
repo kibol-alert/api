@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Kibol_Alert.Models
 {
@@ -10,9 +7,12 @@ namespace Kibol_Alert.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string League { get; set; }
+        public string City { get; set; }
         public string LogoUri { get; set; }
-        public virtual ICollection<ClubRelation> ClubRelations {get; set;}
-        public virtual ICollection<User> Fans { get; set; }
+        public ICollection<ClubRelation> RelationsWith { get; set;}
+        public ICollection<ClubRelation> InRelationsWith { get; set; }
+        public ICollection<User> Fans { get; set; }
+        public ICollection<Chant> Chants { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
