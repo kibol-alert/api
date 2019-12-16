@@ -9,11 +9,12 @@ namespace Kibol_Alert.Database
     {
         public Kibol_AlertContext(DbContextOptions<Kibol_AlertContext> options)
             : base(options)
-        {
-        }
+        {}
 
         public DbSet<ClubRelation> ClubRelations { get; set; }
         public DbSet<Club> Clubs { get; set; }
+        public DbSet<Chant> Chants { get; set; }
+        public DbSet<Brawl> Brawls { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,24 @@ namespace Kibol_Alert.Database
                 .WithOne(i => i.Club);
 
             modelBuilder
+                .Entity<Club>()
+                .HasMany(i => i.Chants)
+                .WithOne(i => i.Club);
+
+            modelBuilder
+                .Entity<Chant>()
+                .HasKey(i => i.Id);
+
+            modelBuilder
+                .Entity<Chant>()
+                .HasOne(i => i.Club)
+                .WithMany(i => i.Chants);
+
+            modelBuilder
+                .Entity<Brawl>()
+                .HasKey(i => i.Id);
+
+            modelBuilder
                 .Entity<ClubRelation>()
                 .HasKey(i => new { i.FirstClubId, i.SecondClubId, i.Relation });
 
@@ -54,6 +73,10 @@ namespace Kibol_Alert.Database
                 .HasOne(i => i.SecondClub)
                 .WithMany(i => i.InRelationsWith)
                 .HasForeignKey(i => i.SecondClubId);
+
+            modelBuilder
+                .Entity<Location>()
+                .HasKey(i => new { i.Latitude, i.Longitude });
         }
     }
 }

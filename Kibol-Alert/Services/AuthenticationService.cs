@@ -43,7 +43,7 @@ namespace Kibol_Alert.Services
 
             if (!result.Succeeded)
             {
-                return new ErrorResponse("test");
+                return new ErrorResponse("Registration failed");
             }
             return new SuccessResponse<bool>(true);
         }

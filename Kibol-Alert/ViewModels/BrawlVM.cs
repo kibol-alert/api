@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Kibol_Alert.Models;
+using System;
 
-namespace Kibol_Alert.Models
+namespace Kibol_Alert.ViewModels
 {
-    public class Brawl
+    public class BrawlVM
     {
         public int Id { get; set; }
         public string FirstClubName { get; set; }

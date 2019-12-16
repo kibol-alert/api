@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Kibol_Alert.Models;
+using System;
 
-namespace Kibol_Alert.Models
+namespace Kibol_Alert.Requests
 {
-    public class Brawl
+    public class BrawlRequest
     {
-        public int Id { get; set; }
         public string FirstClubName { get; set; }
         public string SecondClubName { get; set; }
         public DateTime Date { get; set; }
