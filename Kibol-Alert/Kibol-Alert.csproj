@@ -17,36 +17,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoWrapper.Core" Version="2.0.1" />
+    <PackageReference Include="AutoWrapper.Core" Version="2.1.0" />
     <PackageReference Include="MailKit" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.1.5" />
-    <PackageReference Include="NSwag.Generation.AspNetCore" Version="13.1.5" />
-    <PackageReference Include="NSwag.SwaggerGeneration" Version="12.3.0" />
-    <PackageReference Include="NSwag.SwaggerGeneration.AspNetCore" Version="12.3.0" />
-    <PackageReference Include="NSwag.SwaggerGeneration.WebApi" Version="12.3.0" />
-    <PackageReference Include="NuGet.Frameworks" Version="4.8.0" />
-    <PackageReference Include="Swagger-Net" Version="8.3.23.1103" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.1.6" />
+    <PackageReference Include="NSwag.Core" Version="13.1.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-   
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Responses\" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
