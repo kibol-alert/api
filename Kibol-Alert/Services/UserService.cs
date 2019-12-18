@@ -44,9 +44,17 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> DeleteUser(string id)
+        public async Task<Response> DeleteUser(string id)
         {
-            throw new NotImplementedException();
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
+            if (user == null)
+            {
+                return new ErrorResponse("User not found or already deleted!");
+            }
+            user.IsDeleted = true;
+            Context.Users.Update(user);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
         }
 
         public Task<Response> EditUser(string id, UserRequest request)
