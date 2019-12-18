@@ -107,7 +107,17 @@ namespace Kibol_Alert.Services
                 UserId = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
-                Club = user.Club
+                Club = new ClubBasicVM 
+                {
+                    Id = user.Club.Id,
+                    Name = user.Club.Name,
+                    League = user.Club.League,
+                    LogoUri = user.Club.LogoUri,
+                    City = user.Club.City,
+                    Chants = user.Club.Chants.ToList(),
+                    IsDeleted = user.IsDeleted
+                },
+                IsBanned = user.IsBanned
             };
 
             return new SuccessResponse<UserVM>();
@@ -125,7 +135,17 @@ namespace Kibol_Alert.Services
                     UserId = row.Id,
                     UserName = row.UserName,
                     Email = row.Email,
-                    Club = row.Club
+                    Club = new ClubBasicVM
+                    {
+                        Id = row.Club.Id,
+                        Name = row.Club.Name,
+                        League = row.Club.League,
+                        LogoUri = row.Club.LogoUri,
+                        City = row.Club.City,
+                        Chants = row.Club.Chants.ToList(),
+                        IsDeleted = row.IsDeleted
+                    },
+                    IsBanned = row.IsBanned
                 }).ToListAsync();
 
             return new SuccessResponse<List<UserVM>>();
