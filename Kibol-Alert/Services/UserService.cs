@@ -113,9 +113,22 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<UserVM>();
         }
 
-        public Task<Response> GetUsers(int skip, int take)
+        public async Task<Response> GetUsers(int skip, int take)
         {
-            throw new NotImplementedException();
+            var users = await Context.Users
+                .OrderByDescending(row => row)
+                .Skip(skip)
+                .Take(take)
+                .Include(row => row.Club)
+                .Select(row => new UserVM()
+                {
+                    UserId = row.Id,
+                    UserName = row.UserName,
+                    Email = row.Email,
+                    Club = row.Club
+                }).ToListAsync();
+
+            return new SuccessResponse<List<UserVM>>();
         }
     }
 }
