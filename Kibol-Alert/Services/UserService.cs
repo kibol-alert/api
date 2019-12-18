@@ -83,14 +83,34 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        public Task<Response> EditUser(string id, UserRequest request)
+        public async Task<Response> EditUser(string id, UserRequest request)
         {
-            throw new NotImplementedException();
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id);
+            if (user == null)
+            {
+                return new ErrorResponse("User not found!");
+            }
+            user.ClubId = request.ClubId;
+            Context.Users.Update(user);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<UserVM>();
         }
 
-        public Task<Response> GetUser(string id)
+        public async Task<Response> GetUser(string id)
         {
-            throw new NotImplementedException();
+            var user = await Context.Users
+                .Include(i => i.Club)
+                .FirstOrDefaultAsync(i => !i.IsDeleted && i.Id == id);
+
+            var userDto = new UserVM()
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Club = user.Club
+            };
+
+            return new SuccessResponse<UserVM>();
         }
 
         public Task<Response> GetUsers(int skip, int take)

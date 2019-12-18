@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Kibol_Alert.Models;
 
-
-
 namespace Kibol_Alert.ViewModels
 {
     public class ClubVM
