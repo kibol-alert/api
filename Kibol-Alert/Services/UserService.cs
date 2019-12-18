@@ -117,7 +117,8 @@ namespace Kibol_Alert.Services
                     Chants = user.Club.Chants.ToList(),
                     IsDeleted = user.IsDeleted
                 },
-                IsBanned = user.IsBanned
+                IsBanned = user.IsBanned,
+                IsAdmin = user.IsAdmin
             };
 
             return new SuccessResponse<UserVM>();
@@ -126,6 +127,7 @@ namespace Kibol_Alert.Services
         public async Task<Response> GetUsers(int skip, int take)
         {
             var users = await Context.Users
+                .Where(i => !i.IsDeleted)
                 .OrderByDescending(row => row)
                 .Skip(skip)
                 .Take(take)
@@ -145,7 +147,8 @@ namespace Kibol_Alert.Services
                         Chants = row.Club.Chants.ToList(),
                         IsDeleted = row.IsDeleted
                     },
-                    IsBanned = row.IsBanned
+                IsBanned = row.IsBanned,
+                IsAdmin = row.IsAdmin
                 }).ToListAsync();
 
             return new SuccessResponse<List<UserVM>>();
