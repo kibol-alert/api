@@ -27,30 +27,30 @@ namespace Kibol_Alert.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<UserVM>))]
-        public async Task<IActionResult> GetUser(int id) => ResolveResponse(await _usersService.GetUser(id));
+        public async Task<IActionResult> GetUser(string id) => ResolveResponse(await _usersService.GetUser(id));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> DeleteUser(int id) => ResolveResponse(await _usersService.DeleteUser(id));
+        public async Task<IActionResult> DeleteUser(string id) => ResolveResponse(await _usersService.DeleteUser(id));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> BanUser(int id) => ResolveResponse(await _usersService.BanUser(id));
+        public async Task<IActionResult> BanUser(string id) => ResolveResponse(await _usersService.BanUser(id));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> UnbanUser(int id) => ResolveResponse(await _usersService.UnbanUser(id));
+        public async Task<IActionResult> UnbanUser(string id) => ResolveResponse(await _usersService.UnbanUser(id));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> GivenAdmin(int id) => ResolveResponse(await _usersService.GiveAdmin(id));
+        public async Task<IActionResult> GivenAdmin(string id) => ResolveResponse(await _usersService.GiveAdmin(id));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
-        public async Task<IActionResult> TakeAdmin(int id) => ResolveResponse(await _usersService.TakeAdmin(id));
+        public async Task<IActionResult> TakeAdmin(string id) => ResolveResponse(await _usersService.TakeAdmin(id));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<UserVM>))]
-        public async Task<IActionResult> EditUser(int id, UserRequest request) => ResolveResponse(await _usersService.EditUser(id, request));
+        public async Task<IActionResult> EditUser(string id, UserRequest request) => ResolveResponse(await _usersService.EditUser(id, request));
     }
 }

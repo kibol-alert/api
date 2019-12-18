@@ -18,22 +18,43 @@ namespace Kibol_Alert.Services
         {
         }
 
-        public Task<Response> BanUser(int id)
+        public async Task<Response> BanUser(string id)
+        {
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsBanned == false);
+            if (user == null)
+            {
+                return new ErrorResponse("User not found or already banned!");
+            }
+            user.IsBanned = true;
+            Context.Users.Update(user);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> UnbanUser(string id)
+        {
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsBanned == true);
+            if (user == null)
+            {
+                return new ErrorResponse("User not found or already unbanned!");
+            }
+            user.IsBanned = false;
+            Context.Users.Update(user);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
+        }
+
+        public Task<Response> DeleteUser(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response> DeleteUser(int id)
+        public Task<Response> EditUser(string id, UserRequest request)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response> EditUser(int id, UserRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response> GetUser(int id)
+        public Task<Response> GetUser(string id)
         {
             throw new NotImplementedException();
         }
@@ -43,17 +64,12 @@ namespace Kibol_Alert.Services
             throw new NotImplementedException();
         }
 
-        public Task<Response> GiveAdmin(int id)
+        public Task<Response> GiveAdmin(string id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Response> TakeAdmin(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response> UnbanUser(int id)
+        public Task<Response> TakeAdmin(string id)
         {
             throw new NotImplementedException();
         }
