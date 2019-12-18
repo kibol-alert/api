@@ -57,6 +57,32 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
+        public async Task<Response> GiveAdmin(string id)
+        {
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsAdmin == false);
+            if (user == null)
+            {
+                return new ErrorResponse("User not found or alread is admin!");
+            }
+            user.IsDeleted = true;
+            Context.Users.Update(user);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> TakeAdmin(string id)
+        {
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsAdmin == true);
+            if (user == null)
+            {
+                return new ErrorResponse("User not found or alread isn't admin!");
+            }
+            user.IsDeleted = false;
+            Context.Users.Update(user);
+            await Context.SaveChangesAsync();
+            return new SuccessResponse<bool>(true);
+        }
+
         public Task<Response> EditUser(string id, UserRequest request)
         {
             throw new NotImplementedException();
@@ -68,16 +94,6 @@ namespace Kibol_Alert.Services
         }
 
         public Task<Response> GetUsers(int skip, int take)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response> GiveAdmin(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response> TakeAdmin(string id)
         {
             throw new NotImplementedException();
         }
