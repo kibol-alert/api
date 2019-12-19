@@ -13,7 +13,6 @@ using Kibol_Alert.Models;
 using AutoWrapper;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using AutoWrapper.Wrappers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +47,6 @@ namespace Kibol_Alert
             services.Configure<AppSettings>(appSettingsSection);
 
 
-
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
@@ -74,7 +72,7 @@ namespace Kibol_Alert
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IBrawlService, BrawlService>();
             services.AddScoped<IClubService, ClubService>();
-
+            services.AddScoped<IUserService, UserService>();
 
             services.AddSwaggerDocument(document =>
             {
