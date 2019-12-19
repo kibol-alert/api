@@ -125,7 +125,6 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> GetClub(int id)
         {
-
             var club = await Context.Clubs
                 .Include(i => i.RelationsWith)
                 .Include(i => i.InRelationsWith)
