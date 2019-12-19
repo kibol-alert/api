@@ -47,7 +47,7 @@ namespace Kibol_Alert.Services
             var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
             if (chant == null)
             {
-                return new ErrorResponse("Chant not found!");
+                return new ErrorResponse("Przyśpiewki nie znaleziono!");
             }
             chant.Lyrics = request.Lyrics;
             Context.Chants.Update(chant);
@@ -60,7 +60,7 @@ namespace Kibol_Alert.Services
             var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
             if (chant == null)
             {
-                return new ErrorResponse("Chant not found!");
+                return new ErrorResponse("Przyśpiewki nie znaleziono!");
             }
             Context.Chants.Remove(chant);
             return new SuccessResponse<bool>(true);
@@ -85,7 +85,7 @@ namespace Kibol_Alert.Services
             var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
             if (club == null)
             {
-                return new ErrorResponse("Club not found!");
+                return new ErrorResponse("Klubu nie znaleziono!");
             }
             club.IsDeleted = true;
             await Context.SaveChangesAsync();
@@ -98,7 +98,7 @@ namespace Kibol_Alert.Services
             var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClub.Id == id);
             if (clubRelation == null)
             {
-                return new ErrorResponse("Relation not found!");
+                return new ErrorResponse("Relacji nie znaleziono!");
             }
             Context.ClubRelations.Remove(clubRelation);
             await Context.SaveChangesAsync();
@@ -111,7 +111,7 @@ namespace Kibol_Alert.Services
 
             if (club == null)
             {
-                return new ErrorResponse("Club not found!");
+                return new ErrorResponse("Klubu nie znaleziono!");
             }
 
             club.Name = request.Name;

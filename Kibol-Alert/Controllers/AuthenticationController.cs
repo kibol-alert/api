@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using AutoWrapper.Wrappers;
 using Kibol_Alert.Responses;
-using System.Net;
 
 namespace Kibol_Alert.Controllers
 {

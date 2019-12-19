@@ -5,7 +5,6 @@ using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,7 +36,7 @@ namespace Kibol_Alert.Services
             var brawl = await Context.Brawls.FirstOrDefaultAsync(i => i.Id == id);
             if (brawl == null)
             {
-                return new ErrorResponse("Brawl not found!");
+                return new ErrorResponse("Ustawki nie znaleziono!");
             }
             Context.Brawls.Remove(brawl);
             await Context.SaveChangesAsync();
@@ -49,7 +48,7 @@ namespace Kibol_Alert.Services
             var brawl = await Context.Brawls.FirstOrDefaultAsync(i => i.Id == id);
             if (brawl == null)
             {
-                return new ErrorResponse("Brawl not found!");
+                return new ErrorResponse("Ustawki nie znaleziono!");
             }
 
             brawl.FirstClubName = request.FirstClubName;

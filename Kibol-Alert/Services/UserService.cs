@@ -1,11 +1,9 @@
 ﻿using Kibol_Alert.Database;
-using Kibol_Alert.Models;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,10 +18,10 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> BanUser(string id)
         {
-            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsBanned == false);
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && !i.IsBanned);
             if (user == null)
             {
-                return new ErrorResponse("User not found or already banned!");
+                return new ErrorResponse("Użytkownika nie znaleziono lub już zbanowany!");
             }
             user.IsBanned = true;
             Context.Users.Update(user);
@@ -33,10 +31,10 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> UnbanUser(string id)
         {
-            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsBanned == true);
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsBanned);
             if (user == null)
             {
-                return new ErrorResponse("User not found or already unbanned!");
+                return new ErrorResponse("Użytkownika nie znaleziono lub już odbanowany!");
             }
             user.IsBanned = false;
             Context.Users.Update(user);
@@ -46,10 +44,10 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> DeleteUser(string id)
         {
-            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsDeleted == false);
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && !i.IsDeleted);
             if (user == null)
             {
-                return new ErrorResponse("User not found or already deleted!");
+                return new ErrorResponse("Użytkownika nie znaleziono lub już usunięty!");
             }
             user.IsDeleted = true;
             Context.Users.Update(user);
@@ -59,10 +57,10 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> GiveAdmin(string id)
         {
-            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsAdmin == false);
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && !i.IsAdmin);
             if (user == null)
             {
-                return new ErrorResponse("User not found or alread is admin!");
+                return new ErrorResponse("Użytkownika nie znaleziono lub już jest adminem!");
             }
             user.IsDeleted = true;
             Context.Users.Update(user);
@@ -72,10 +70,10 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> TakeAdmin(string id)
         {
-            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsAdmin == true);
+            var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id && i.IsAdmin);
             if (user == null)
             {
-                return new ErrorResponse("User not found or alread isn't admin!");
+                return new ErrorResponse("Użytkownika nie znaleziono lub nie jest adminem!");
             }
             user.IsDeleted = false;
             Context.Users.Update(user);
@@ -88,7 +86,7 @@ namespace Kibol_Alert.Services
             var user = await Context.Users.FirstOrDefaultAsync(i => i.Id == id);
             if (user == null)
             {
-                return new ErrorResponse("User not found!");
+                return new ErrorResponse("Użytkownika nie znaleziono!");
             }
             user.ClubId = request.ClubId;
             Context.Users.Update(user);

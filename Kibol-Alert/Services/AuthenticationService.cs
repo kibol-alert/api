@@ -5,7 +5,6 @@ using Kibol_Alert.Database;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using AutoWrapper.Wrappers;
 using Kibol_Alert.Responses;
 
 namespace Kibol_Alert.Services
@@ -28,9 +27,9 @@ namespace Kibol_Alert.Services
         public async Task<Response> Register(RegisterRequest request)
         {
             if (Context.Users.Any(i => i.Email == request.Email))
-                return new ErrorResponse("Email Error");
+                return new ErrorResponse("Błędny email!\nPrawidłowy format: example@example.com");
             if (request.Password != request.ConfirmedPassword)
-                return new ErrorResponse("Passwords are not the same");
+                return new ErrorResponse("Hasła nie są identyczne");
 
             var user = new User()
             {
@@ -43,7 +42,7 @@ namespace Kibol_Alert.Services
 
             if (!result.Succeeded)
             {
-                return new ErrorResponse("Registration failed");
+                return new ErrorResponse("Rejestracja się nie powiodła");
             }
             return new SuccessResponse<bool>(true);
         }
@@ -53,12 +52,12 @@ namespace Kibol_Alert.Services
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 
             if (!result.Succeeded)
-                return new ErrorResponse("Login failed");
+                return new ErrorResponse("Ksywa lub hasło jest błędne!");
 
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
             if (token == null)
             {
-                return new ErrorResponse("User doesn't exist");
+                return new ErrorResponse("Nie znaleziono użytkownika");
             }
             return new SuccessResponse<JwtToken>(token);
         }
