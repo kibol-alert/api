@@ -1,13 +1,7 @@
-﻿using AutoWrapper.Wrappers;
-using Kibol_Alert.Responses;
-using Kibol_Alert.Services;
+﻿using Kibol_Alert.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Kibol_Alert.Controllers
 {
