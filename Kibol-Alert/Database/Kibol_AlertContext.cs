@@ -15,6 +15,7 @@ namespace Kibol_Alert.Database
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Chant> Chants { get; set; }
         public DbSet<Brawl> Brawls { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -77,6 +78,10 @@ namespace Kibol_Alert.Database
             modelBuilder
                 .Entity<Location>()
                 .HasKey(i => new { i.Latitude, i.Longitude });
+
+            modelBuilder
+                .Entity<Log>()
+                .HasKey(i => i.Id);
         }
     }
 }

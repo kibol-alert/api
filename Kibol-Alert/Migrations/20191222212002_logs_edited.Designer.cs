@@ -4,14 +4,16 @@ using Kibol_Alert.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kibol_Alert.Migrations
 {
     [DbContext(typeof(Kibol_AlertContext))]
-    partial class Kibol_AlertContextModelSnapshot : ModelSnapshot
+    [Migration("20191222212002_logs_edited")]
+    partial class logs_edited
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,8 +141,8 @@ namespace Kibol_Alert.Migrations
                     b.Property<string>("MethodName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TimeStamp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

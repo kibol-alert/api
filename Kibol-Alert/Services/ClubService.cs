@@ -7,15 +7,16 @@ using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Kibol_Alert.Services
 {
     public class ClubService : BaseService, IClubService
     {
-        public ClubService(Kibol_AlertContext context) : base(context)
-        {
-        }
+        public ClubService(Kibol_AlertContext context, ILoggerService logger) : base(context, logger)
+        { }
 
         public async Task<Response> AddClub(ClubRequest request)
         {
@@ -28,6 +29,8 @@ namespace Kibol_Alert.Services
 
             await Context.Clubs.AddAsync(club);
             await Context.SaveChangesAsync();
+
+            AddLog($"Dodano klub {request.Name}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -39,6 +42,7 @@ namespace Kibol_Alert.Services
             };
             await Context.Chants.AddAsync(chant);
             await Context.SaveChangesAsync();
+            AddLog($"Dodano przyśpiewke {request}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -52,6 +56,7 @@ namespace Kibol_Alert.Services
             chant.Lyrics = request.Lyrics;
             Context.Chants.Update(chant);
             await Context.SaveChangesAsync();
+            AddLog($"Edytowano przyśpiewke {chant.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -63,6 +68,7 @@ namespace Kibol_Alert.Services
                 return new ErrorResponse("Przyśpiewki nie znaleziono!");
             }
             Context.Chants.Remove(chant);
+            AddLog($"Usunięto przyśpiewke {chant.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -77,6 +83,7 @@ namespace Kibol_Alert.Services
             await Context.ClubRelations.AddAsync(clubRelation);
             await Context.SaveChangesAsync();
 
+            AddLog($"Dodano relacje pomiędzy {request.FirstClubId} i {request.SecondClubId}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -89,7 +96,8 @@ namespace Kibol_Alert.Services
             }
             club.IsDeleted = true;
             await Context.SaveChangesAsync();
-            
+
+            AddLog($"Usunięto klub {club.Name} o id {club.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -102,6 +110,7 @@ namespace Kibol_Alert.Services
             }
             Context.ClubRelations.Remove(clubRelation);
             await Context.SaveChangesAsync();
+            AddLog($"Usunięto relacje pomiędzy {clubRelation.FirstClubId} i {clubRelation.SecondClubId} ");
             return new SuccessResponse<bool>(true);
         }
 
@@ -119,7 +128,9 @@ namespace Kibol_Alert.Services
             club.LogoUri = request.LogoUri;
 
             Context.Clubs.Update(club);
+
             await Context.SaveChangesAsync();
+            AddLog($"Edytowano klub {club.Id}");
             return new SuccessResponse<ClubVM>();
         }
 

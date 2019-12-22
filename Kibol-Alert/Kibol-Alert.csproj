@@ -10,9 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Kibol-Alert.Tests\**" />
     <Compile Remove="Middleware\**" />
+    <Content Remove="Kibol-Alert.Tests\**" />
     <Content Remove="Middleware\**" />
+    <EmbeddedResource Remove="Kibol-Alert.Tests\**" />
     <EmbeddedResource Remove="Middleware\**" />
+    <None Remove="Kibol-Alert.Tests\**" />
     <None Remove="Middleware\**" />
   </ItemGroup>
 

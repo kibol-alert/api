@@ -4,14 +4,16 @@ using Kibol_Alert.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kibol_Alert.Migrations
 {
     [DbContext(typeof(Kibol_AlertContext))]
-    partial class Kibol_AlertContextModelSnapshot : ModelSnapshot
+    [Migration("20191222213541_logs_timestamp")]
+    partial class logs_timestamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

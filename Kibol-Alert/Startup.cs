@@ -73,10 +73,11 @@ namespace Kibol_Alert
             services.AddScoped<IBrawlService, BrawlService>();
             services.AddScoped<IClubService, ClubService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoggerService, LoggerService>();
 
             services.AddSwaggerDocument(document =>
             {
-                document.Title = "toDo";
+                document.Title = "Kibol Alert";
                 document.DocumentName = "swagger";
                 document.OperationProcessors.Add(new OperationSecurityScopeProcessor("jwt"));
                 document.DocumentProcessors.Add(new SecurityDefinitionAppender("jwt", new OpenApiSecurityScheme
