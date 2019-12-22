@@ -7,6 +7,7 @@ using Kibol_Alert.ViewModels;
 using Kibol_Alert.Responses;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Services.Interfaces;
+using Kibol_Alert.Models;
 
 namespace Kibol_Alert.Controllers
 {
@@ -52,5 +53,9 @@ namespace Kibol_Alert.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<UserVM>))]
         public async Task<IActionResult> EditUser(string id, UserRequest request) => ResolveResponse(await _usersService.EditUser(id, request));
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<List<Log>>))]
+        public async Task<IActionResult> GetLogs() => ResolveResponse(await _usersService.GetLogs());
     }
 }

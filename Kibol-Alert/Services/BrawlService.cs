@@ -13,7 +13,7 @@ namespace Kibol_Alert.Services
 {
     public class BrawlService : BaseService, IBrawlService
     {
-        public BrawlService(Kibol_AlertContext context) : base(context)
+        public BrawlService(Kibol_AlertContext context, ILoggerService logger) : base(context, logger)
         {
         }
 
@@ -26,8 +26,11 @@ namespace Kibol_Alert.Services
                 Date = request.Date,
                 Location = request.Location
             };
+
+
             await Context.Brawls.AddAsync(brawl);
             await Context.SaveChangesAsync();
+            AddLog($"Stworzono ustawkę {request.FirstClubName} vs {request.SecondClubName}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -40,6 +43,7 @@ namespace Kibol_Alert.Services
             }
             Context.Brawls.Remove(brawl);
             await Context.SaveChangesAsync();
+            AddLog($"Usunięto ustawkę {brawl.FirstClubName} vs {brawl.SecondClubName}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -58,6 +62,7 @@ namespace Kibol_Alert.Services
             
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
+            AddLog($"Edytowane ustawkę {brawl.Id}");
             return new SuccessResponse<BrawlVM>();
         }
 

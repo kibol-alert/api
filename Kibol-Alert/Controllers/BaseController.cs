@@ -20,7 +20,5 @@ namespace Kibol_Alert.Controllers
         protected IActionResult CreateSuccessResponse<T>(T data) => StatusCode((int)HttpStatusCode.OK, data);
 
         protected IActionResult ResolveResponse(Response service) => service.Success ? CreateSuccessResponse(service) : CreateErrorResponse(service);
-
-
     }
 }

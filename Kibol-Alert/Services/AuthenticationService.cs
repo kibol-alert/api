@@ -17,7 +17,7 @@ namespace Kibol_Alert.Services
 
         public AuthenticationService(Kibol_AlertContext context, SignInManager<User> signInManager,
             UserManager<User> userManager,
-            IJwtHelper jwtHelper) : base(context)
+            IJwtHelper jwtHelper, ILoggerService logger) : base(context, logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -41,9 +41,9 @@ namespace Kibol_Alert.Services
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
-            {
                 return new ErrorResponse("Rejestracja się nie powiodła");
-            }
+
+            AddLog($"Konto {request.UserName} zostało stworzone");
             return new SuccessResponse<bool>(true);
         }
 
@@ -56,9 +56,9 @@ namespace Kibol_Alert.Services
 
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
             if (token == null)
-            {
                 return new ErrorResponse("Nie znaleziono użytkownika");
-            }
+
+            AddLog($"{request.UserName} zalogował się na konto");
             return new SuccessResponse<JwtToken>(token);
         }
 

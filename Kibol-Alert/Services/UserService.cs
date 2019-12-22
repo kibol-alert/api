@@ -1,4 +1,5 @@
 ﻿using Kibol_Alert.Database;
+using Kibol_Alert.Models;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
@@ -12,7 +13,7 @@ namespace Kibol_Alert.Services
 {
     public class UserService : BaseService, IUserService
     {
-        public UserService(Kibol_AlertContext context) : base(context)
+        public UserService(Kibol_AlertContext context, ILoggerService logger) : base(context, logger)
         {
         }
 
@@ -26,6 +27,7 @@ namespace Kibol_Alert.Services
             user.IsBanned = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
+            AddLog($"Zbanowano użytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -39,6 +41,7 @@ namespace Kibol_Alert.Services
             user.IsBanned = false;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
+            AddLog($"Odbanowano użytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -52,6 +55,7 @@ namespace Kibol_Alert.Services
             user.IsDeleted = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
+            AddLog($"Usunięto użytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -65,6 +69,7 @@ namespace Kibol_Alert.Services
             user.IsDeleted = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
+            AddLog($"Nadano uprawnienia admina użytkownikowi {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -78,6 +83,7 @@ namespace Kibol_Alert.Services
             user.IsDeleted = false;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
+            AddLog($"Zabrano uprawnienia admina użytkownikowi {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -91,6 +97,7 @@ namespace Kibol_Alert.Services
             user.ClubId = request.ClubId;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
+            AddLog($"Edytowano użytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<UserVM>();
         }
 
@@ -150,6 +157,15 @@ namespace Kibol_Alert.Services
                 }).ToListAsync();
 
             return new SuccessResponse<List<UserVM>>();
+        }
+
+        public async Task<Response> GetLogs()
+        {
+            var logs = await Context.Logs
+                .OrderByDescending(row => row)
+                .ToListAsync();
+
+            return new SuccessResponse<List<Log>>(logs);
         }
     }
 }

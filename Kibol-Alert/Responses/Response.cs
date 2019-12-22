@@ -7,8 +7,7 @@ namespace Kibol_Alert.Responses
     {
         public Response() { }
         [JsonConstructor]
-        public Response( bool success) {
-            Console.WriteLine(success);
+        public Response(bool success) {
             Success = success;
         }
 

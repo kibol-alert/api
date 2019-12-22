@@ -14,5 +14,6 @@ namespace Kibol_Alert.Services.Interfaces
         public Task<Response> GiveAdmin(string id);
         public Task<Response> TakeAdmin(string id);
         public Task<Response> EditUser(string id, UserRequest request);
+        public Task<Response> GetLogs();
     }
 }
