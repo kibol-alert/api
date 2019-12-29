@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
@@ -30,7 +29,6 @@ namespace Kibol_Alert.Tests
             _appSettings = Options.Create(new AppSettings(){ Secret = "SPECIALFORTESTS" });
             _jwtHelper = new JwtHelper(_appSettings, _contextBuilder.Context);
             _authorizationService = new AuthenticationService(_contextBuilder.Context, _signInManager, _userManager, _jwtHelper);
-
         }
         [Theory]
         [MemberData(nameof(DataForRegister))]

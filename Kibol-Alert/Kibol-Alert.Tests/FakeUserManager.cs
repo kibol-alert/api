@@ -6,10 +6,6 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Kibol_Alert.Models;
 using System;
-using Kibol_Alert.Database;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace Kibol_Alert.Tests
 {
