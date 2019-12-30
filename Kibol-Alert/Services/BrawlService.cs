@@ -27,7 +27,6 @@ namespace Kibol_Alert.Services
                 Location = request.Location
             };
 
-
             await Context.Brawls.AddAsync(brawl);
             await Context.SaveChangesAsync();
             AddLog($"Stworzono ustawkę {request.FirstClubName} vs {request.SecondClubName}");
