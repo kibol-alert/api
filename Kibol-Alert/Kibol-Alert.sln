@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kibol-Alert", "Kibol-Alert.csproj", "{A2417A29-D58A-4498-B084-3D1D0C1B94CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kibol-Alert.Tests", "Kibol-Alert.Tests\Kibol-Alert.Tests.csproj", "{DA2C454C-A9C3-4A67-8A3C-00E26DD3EFD8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{A2417A29-D58A-4498-B084-3D1D0C1B94CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2417A29-D58A-4498-B084-3D1D0C1B94CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2417A29-D58A-4498-B084-3D1D0C1B94CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA2C454C-A9C3-4A67-8A3C-00E26DD3EFD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA2C454C-A9C3-4A67-8A3C-00E26DD3EFD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA2C454C-A9C3-4A67-8A3C-00E26DD3EFD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA2C454C-A9C3-4A67-8A3C-00E26DD3EFD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
