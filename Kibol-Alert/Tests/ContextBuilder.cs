@@ -12,7 +12,7 @@ namespace Kibol_Alert.Tests
 
         public ContextBuilder()
         {
-            builder = new DbContextOptionsBuilder<Kibol_AlertContext>().UseSqlServer("Server=tcp:kosa-czy-sztama.database.windows.net,1433;Initial Catalog=kosa-czy-sztama;Persist Security Info=False;User ID=kosa;Password=Qwer1234.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            builder = new DbContextOptionsBuilder<Kibol_AlertContext>().UseInMemoryDatabase(databaseName: "Add_writes_to_database");
             options = builder.Options;
             Context = new Kibol_AlertContext(options);
         }
