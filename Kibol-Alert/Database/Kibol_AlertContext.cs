@@ -77,7 +77,7 @@ namespace Kibol_Alert.Database
 
             modelBuilder
                 .Entity<Location>()
-                .HasKey(i => new { i.Latitude, i.Longitude });
+                .HasKey(i => i.Id);
 
             modelBuilder
                 .Entity<Log>()
