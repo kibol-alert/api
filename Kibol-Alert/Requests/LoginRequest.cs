@@ -3,7 +3,7 @@
 namespace Kibol_Alert.Requests
 {
     public class LoginRequest
-    { 
+    {
         [Required]
         public string UserName { get; set; }
         [Required]

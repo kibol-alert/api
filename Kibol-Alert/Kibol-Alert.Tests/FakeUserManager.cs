@@ -1,10 +1,10 @@
+using Kibol_Alert.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using Kibol_Alert.Models;
 using System;
 
 namespace Kibol_Alert.Tests

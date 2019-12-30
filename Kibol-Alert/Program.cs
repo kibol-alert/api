@@ -34,7 +34,7 @@ namespace Kibol_Alert
                 context.Database.Migrate();
                 var seeder = new DataInitialization(context, userManager);
                 seeder.SeedClubs();
-                seeder.SeedUser();  
+                seeder.SeedUser();
             }
             return host;
         }

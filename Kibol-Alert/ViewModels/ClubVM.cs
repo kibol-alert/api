@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Kibol_Alert.Models;
+﻿using Kibol_Alert.Models;
+using System.Collections.Generic;
 
 namespace Kibol_Alert.ViewModels
 {

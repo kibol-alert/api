@@ -1,10 +1,10 @@
-﻿using Xunit;
+﻿using Kibol_Alert.Models;
 using Kibol_Alert.Requests;
-using Kibol_Alert.Models;
-using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.Services;
-using System.Collections.Generic;
+using Kibol_Alert.Services.Interfaces;
 using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace Kibol_Alert.Tests
 {
@@ -42,8 +42,8 @@ namespace Kibol_Alert.Tests
                 new object[]{
                     "FirstClubName1",
                     "FirstClubName2",
-                    "202001011200",
-                    ("123456", "987654")
+                    new DateTime(2020,01,01,12,00,00),
+                    new Location(123456.0f, 987654.0f)
                 }
             };
     }

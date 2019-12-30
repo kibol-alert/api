@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kibol_Alert.Requests;
+using Kibol_Alert.Responses;
+using Kibol_Alert.Services.Interfaces;
+using Kibol_Alert.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kibol_Alert.ViewModels;
-using Kibol_Alert.Services.Interfaces;
-using Kibol_Alert.Responses;
-using Kibol_Alert.Requests;
 
 namespace Kibol_Alert.Controllers
 {

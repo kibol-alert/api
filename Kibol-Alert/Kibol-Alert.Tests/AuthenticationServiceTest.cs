@@ -1,15 +1,15 @@
-using Xunit;
-using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
-using Kibol_Alert.Models;
-using Kibol_Alert.Services.Interfaces;
-using Kibol_Alert.Services;
 using Kibol_Alert.Helpers;
+using Kibol_Alert.Models;
+using Kibol_Alert.Requests;
+using Kibol_Alert.Services;
+using Kibol_Alert.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Xunit;
 
 namespace Kibol_Alert.Tests
 {
@@ -26,7 +26,7 @@ namespace Kibol_Alert.Tests
             _contextBuilder = new ContextBuilder();
             _signInManager = new FakeSignInManager();
             _userManager = CreateUserManager("Server=tcp:kosa-czy-sztama.database.windows.net,1433;Initial Catalog=kosa-czy-sztama;Persist Security Info=False;User ID=kosa;Password=Qwer1234.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-            _appSettings = Options.Create(new AppSettings(){ Secret = "SPECIALFORTESTS" });
+            _appSettings = Options.Create(new AppSettings() { Secret = "SPECIALFORTESTS" });
             _jwtHelper = new JwtHelper(_appSettings, _contextBuilder.Context);
             _authorizationService = new AuthenticationService(_contextBuilder.Context, _signInManager, _userManager, _jwtHelper);
         }
@@ -51,7 +51,7 @@ namespace Kibol_Alert.Tests
         public static IEnumerable<object[]> DataForRegister =>
             new List<object[]>
             {
-                new object[]{ 
+                new object[]{
                     "test2@example.com",
                     "test",
                     "Test123.",

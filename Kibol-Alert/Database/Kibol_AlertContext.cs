@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+﻿using Kibol_Alert.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Kibol_Alert.Models;
 
 namespace Kibol_Alert.Database
 {
@@ -9,7 +8,7 @@ namespace Kibol_Alert.Database
     {
         public Kibol_AlertContext(DbContextOptions<Kibol_AlertContext> options)
             : base(options)
-        {}
+        { }
 
         public DbSet<ClubRelation> ClubRelations { get; set; }
         public DbSet<Club> Clubs { get; set; }
@@ -66,7 +65,7 @@ namespace Kibol_Alert.Database
                 .HasOne(i => i.FirstClub)
                 .WithMany(i => i.RelationsWith)
                 .HasForeignKey(i => i.FirstClubId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder
                 .Entity<ClubRelation>()
@@ -76,7 +75,7 @@ namespace Kibol_Alert.Database
 
             modelBuilder
                 .Entity<Location>()
-                .HasKey(i => new { i.Latitude, i.Longitude });
+                .HasKey(i => i.Id );
         }
     }
 }

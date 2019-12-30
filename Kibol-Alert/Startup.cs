@@ -1,22 +1,22 @@
+using AutoWrapper;
+using Kibol_Alert.Database;
+using Kibol_Alert.Helpers;
+using Kibol_Alert.Models;
+using Kibol_Alert.Services;
+using Kibol_Alert.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Kibol_Alert.Database;
-using Microsoft.AspNetCore.Mvc;
-using Kibol_Alert.Services.Interfaces;
-using Kibol_Alert.Services;
-using Microsoft.AspNetCore.Identity;
-using Kibol_Alert.Models;
-using AutoWrapper;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Kibol_Alert.Helpers;
 
 namespace Kibol_Alert
 {
@@ -38,8 +38,8 @@ namespace Kibol_Alert
 
             services.AddDbContext<Kibol_AlertContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("Kibol-Alert")));
-            
-            
+
+
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Kibol_AlertContext>();
 
@@ -126,9 +126,9 @@ namespace Kibol_Alert
                     document.Schemes.Add(OpenApiSchema.Https);
                 };
             });
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            
+            app.UseExceptionHandler("/Home/Error");
+            app.UseHsts();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -1,6 +1,4 @@
-﻿using Kibol_Alert.Models;
-
-namespace Kibol_Alert.ViewModels
+﻿namespace Kibol_Alert.ViewModels
 {
     public class UserVM
     {

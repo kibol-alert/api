@@ -89,7 +89,7 @@ namespace Kibol_Alert.Services
             }
             club.IsDeleted = true;
             await Context.SaveChangesAsync();
-            
+
             return new SuccessResponse<bool>(true);
         }
 
@@ -142,9 +142,9 @@ namespace Kibol_Alert.Services
                 Chants = club.Chants,
 
                 ClubRelations = club.RelationsWith.Select(row => new ClubRelationVM()
-                { 
+                {
                     FirstClubId = row.FirstClubId,
-                }) .ToList(),
+                }).ToList(),
 
                 Fans = club.Fans.Select(row => new MemberVM()
                 {

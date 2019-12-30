@@ -2,7 +2,7 @@
 
 namespace Kibol_Alert.Models
 {
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         public int? ClubId { get; set; }
         public virtual Club Club { get; set; }

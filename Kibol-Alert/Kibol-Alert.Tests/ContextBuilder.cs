@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using Kibol_Alert.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kibol_Alert.Tests
 {

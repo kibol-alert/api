@@ -1,16 +1,16 @@
-﻿using Kibol_Alert.Services.Interfaces;
+﻿using Kibol_Alert.Database;
 using Kibol_Alert.Models;
 using Kibol_Alert.Requests;
-using Kibol_Alert.Database;
+using Kibol_Alert.Responses;
+using Kibol_Alert.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Kibol_Alert.Responses;
 
 namespace Kibol_Alert.Services
 {
     public class AuthenticationService : BaseService, IAuthenticationService
-    { 
+    {
         private readonly SignInManager<User> _signInManager = null;
         private readonly UserManager<User> _userManager = null;
         private readonly IJwtHelper _jwtHelper;

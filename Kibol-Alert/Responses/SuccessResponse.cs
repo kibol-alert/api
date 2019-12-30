@@ -7,7 +7,7 @@
         {
         }
         public SuccessResponse(T responseData)
-            : base( true)
+            : base(true)
         {
             Payload = responseData;
         }

@@ -31,7 +31,7 @@ namespace Kibol_Alert.Database
 
         public void SeedClubs()
         {
-            if (_context.Clubs.FirstOrDefault(i=> i.Name == "Cracovia") == null)
+            if (_context.Clubs.FirstOrDefault(i => i.Name == "Cracovia") == null)
             {
                 _context.Clubs.Add(new Club { Name = "Arka Gdynia", League = "Ekstraklasa", City = "Gdynia" });
                 _context.Clubs.Add(new Club { Name = "Cracovia", League = "Ekstraklasa", City = "Kraków" });

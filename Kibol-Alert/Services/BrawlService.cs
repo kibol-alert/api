@@ -55,7 +55,7 @@ namespace Kibol_Alert.Services
             brawl.SecondClubName = request.SecondClubName;
             brawl.Date = request.Date;
             brawl.Location = request.Location;
-            
+
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
             return new SuccessResponse<BrawlVM>();

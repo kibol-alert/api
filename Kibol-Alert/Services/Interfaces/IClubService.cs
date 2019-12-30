@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Kibol_Alert.Requests;
+﻿using Kibol_Alert.Requests;
 using Kibol_Alert.Responses;
+using System.Threading.Tasks;
 
 namespace Kibol_Alert.Services.Interfaces
 {
