@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Moq;
 
 namespace Kibol_Alert.Tests
 {
@@ -22,6 +23,7 @@ namespace Kibol_Alert.Tests
         private readonly IAuthenticationService _authorizationService;
         private readonly IOptions<AppSettings> _appSettings;
         private readonly JwtHelper _jwtHelper;
+        private readonly ILoggerService _logger;
         public AuthenticationServiceTest()
         {
             _contextBuilder = new ContextBuilder();
@@ -29,7 +31,7 @@ namespace Kibol_Alert.Tests
             _userManager = CreateUserManager("Server=tcp:kosa-czy-sztama.database.windows.net,1433;Initial Catalog=kosa-czy-sztama;Persist Security Info=False;User ID=kosa;Password=Qwer1234.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             _appSettings = Options.Create(new AppSettings(){ Secret = "SPECIALFORTESTS" });
             _jwtHelper = new JwtHelper(_appSettings, _contextBuilder.Context);
-            _authorizationService = new AuthenticationService(_contextBuilder.Context, _signInManager, _userManager, _jwtHelper);
+            _authorizationService = new AuthenticationService(_contextBuilder.Context, _signInManager, _userManager, _jwtHelper, _logger) ;
 
         }
         [Theory]
@@ -58,7 +60,7 @@ namespace Kibol_Alert.Tests
                     "test",
                     "Test123.",
                     "Test123.",
-                    1
+                    5
                 }
             };
 
