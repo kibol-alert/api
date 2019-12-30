@@ -13,7 +13,7 @@ namespace Kibol_Alert.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize]
     public class UserController : BaseController
     {
         private readonly IUserService _usersService;
@@ -51,7 +51,7 @@ namespace Kibol_Alert.Controllers
         public async Task<IActionResult> TakeAdmin(string id) => ResolveResponse(await _usersService.TakeAdmin(id));
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<UserVM>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
         public async Task<IActionResult> EditUser(string id, UserRequest request) => ResolveResponse(await _usersService.EditUser(id, request));
 
         [HttpGet]

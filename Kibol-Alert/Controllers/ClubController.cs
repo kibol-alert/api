@@ -12,7 +12,7 @@ namespace Kibol_Alert.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize]
     public class ClubController : BaseController
     {
         private readonly IClubService _clubsService;
@@ -22,6 +22,7 @@ namespace Kibol_Alert.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<List<ClubVM>>))]
         public async Task<IActionResult> GetClubs(int skip, int take) => ResolveResponse(await _clubsService.GetClubs(skip, take));
 
@@ -40,7 +41,7 @@ namespace Kibol_Alert.Controllers
 
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<ClubVM>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
         public async Task<IActionResult> EditClub(int id, ClubRequest request) => ResolveResponse(await _clubsService.EditClub(id, request));
 
 

@@ -63,7 +63,7 @@ namespace Kibol_Alert.Services
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
             AddLog($"Edytowane ustawkę {brawl.Id}");
-            return new SuccessResponse<BrawlVM>();
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetBrawl(int id)
@@ -72,7 +72,7 @@ namespace Kibol_Alert.Services
                 .Include(i => i.Location)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
-            var bralwDto = new BrawlVM()
+            var brawlDto = new BrawlVM()
             {
                 Id = brawl.Id,
                 FirstClubName = brawl.FirstClubName,
@@ -81,7 +81,7 @@ namespace Kibol_Alert.Services
                 Location = brawl.Location
             };
 
-            return new SuccessResponse<BrawlVM>();
+            return new SuccessResponse<BrawlVM>(brawlDto);
         }
 
         public async Task<Response> GetBrawls(int skip, int take)
@@ -100,7 +100,7 @@ namespace Kibol_Alert.Services
                     Location = row.Location
                 }).ToListAsync();
 
-            return new SuccessResponse<List<BrawlVM>>();
+            return new SuccessResponse<List<BrawlVM>>(brawls);
         }
     }
 }

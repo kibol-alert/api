@@ -131,7 +131,7 @@ namespace Kibol_Alert.Services
 
             await Context.SaveChangesAsync();
             AddLog($"Edytowano klub {club.Id}");
-            return new SuccessResponse<ClubVM>();
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetClub(int id)
@@ -164,7 +164,7 @@ namespace Kibol_Alert.Services
                 }).ToList(),
             };
 
-            return new SuccessResponse<ClubVM>();
+            return new SuccessResponse<ClubVM>(clubDto);
         }
 
         public async Task<Response> GetClubs(int skip, int take)
