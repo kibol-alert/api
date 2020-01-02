@@ -39,7 +39,7 @@ namespace Kibol_Alert.Controllers
 
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<ClubVM>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SuccessResponse<bool>))]
         public async Task<IActionResult> EditBrawl(int id, BrawlRequest request) => ResolveResponse(await _brawlsService.EditBrawl(id, request));
     }
 }

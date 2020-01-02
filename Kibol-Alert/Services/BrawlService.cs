@@ -62,7 +62,7 @@ namespace Kibol_Alert.Services
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
             AddLog($"Edytowane ustawkę {brawl.Id}");
-            return new SuccessResponse<BrawlVM>();
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetBrawl(int id)

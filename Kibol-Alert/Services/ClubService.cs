@@ -122,16 +122,22 @@ namespace Kibol_Alert.Services
             {
                 return new ErrorResponse("Klubu nie znaleziono!");
             }
-
-            club.Name = request.Name;
-            club.League = request.League;
-            club.LogoUri = request.LogoUri;
+            if(request.Name != null)
+                club.Name = request.Name;
+            if (request.League != null)
+                club.League = request.League;
+            if (request.LogoUri != null)
+                club.LogoUri = request.LogoUri;
+            if (request.Longitude != null)
+                club.Longitude = request.Longitude;
+            if (request.Latitude != null)
+                club.Latitude = request.Latitude;
 
             Context.Clubs.Update(club);
 
             await Context.SaveChangesAsync();
             AddLog($"Edytowano klub {club.Id}");
-            return new SuccessResponse<ClubVM>();
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetClub(int id)
@@ -151,6 +157,8 @@ namespace Kibol_Alert.Services
                 LogoUri = club.LogoUri,
                 City = club.City,
                 Chants = club.Chants,
+                Longitude = club.Longitude,
+                Latitude = club.Latitude,
 
                 ClubRelations = club.RelationsWith.Select(row => new ClubRelationVM()
                 { 
@@ -183,6 +191,8 @@ namespace Kibol_Alert.Services
                     League = row.League,
                     LogoUri = row.LogoUri,
                     City = row.City,
+                    Longitude = row.Longitude,
+                    Latitude = row.Latitude,
                     ClubRelations = row.RelationsWith.Select(row => new ClubRelationVM()
                     {
                         FirstClubId = row.FirstClubId,

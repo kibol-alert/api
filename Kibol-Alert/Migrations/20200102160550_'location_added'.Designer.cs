@@ -4,14 +4,16 @@ using Kibol_Alert.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kibol_Alert.Migrations
 {
     [DbContext(typeof(Kibol_AlertContext))]
-    partial class Kibol_AlertContextModelSnapshot : ModelSnapshot
+    [Migration("20200102160550_'location_added'")]
+    partial class location_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,11 +77,11 @@ namespace Kibol_Alert.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GeolocationId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<float?>("Latitude")
-                        .HasColumnType("real");
 
                     b.Property<string>("League")
                         .HasColumnType("nvarchar(max)");
@@ -87,13 +89,12 @@ namespace Kibol_Alert.Migrations
                     b.Property<string>("LogoUri")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("Longitude")
-                        .HasColumnType("real");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GeolocationId");
 
                     b.ToTable("Clubs");
                 });
@@ -377,6 +378,13 @@ namespace Kibol_Alert.Migrations
                     b.HasOne("Kibol_Alert.Models.Club", "Club")
                         .WithMany("Chants")
                         .HasForeignKey("ClubId");
+                });
+
+            modelBuilder.Entity("Kibol_Alert.Models.Club", b =>
+                {
+                    b.HasOne("Kibol_Alert.Models.Location", "Geolocation")
+                        .WithMany()
+                        .HasForeignKey("GeolocationId");
                 });
 
             modelBuilder.Entity("Kibol_Alert.Models.ClubRelation", b =>

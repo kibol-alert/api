@@ -98,7 +98,7 @@ namespace Kibol_Alert.Services
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
             AddLog($"Edytowano użytkownika {user.UserName}, id: {user.Id}");
-            return new SuccessResponse<UserVM>();
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetUser(string id)

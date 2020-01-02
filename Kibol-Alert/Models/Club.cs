@@ -13,6 +13,8 @@ namespace Kibol_Alert.Models
         public ICollection<ClubRelation> InRelationsWith { get; set; }
         public ICollection<User> Fans { get; set; }
         public ICollection<Chant> Chants { get; set; }
+        public float? Longitude { get; set; }
+        public float? Latitude { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
