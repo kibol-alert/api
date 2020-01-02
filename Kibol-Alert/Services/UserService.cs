@@ -126,7 +126,7 @@ namespace Kibol_Alert.Services
                 IsAdmin = user.IsAdmin
             };
 
-            return new SuccessResponse<UserVM>();
+            return new SuccessResponse<UserVM>(userDto);
         }
 
         public async Task<Response> GetUsers(int skip, int take)
@@ -155,7 +155,7 @@ namespace Kibol_Alert.Services
                     IsAdmin = row.IsAdmin
                 }).ToListAsync();
 
-            return new SuccessResponse<List<UserVM>>();
+            return new SuccessResponse<List<UserVM>>(users);
         }
 
         public async Task<Response> GetLogs()

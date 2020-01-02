@@ -172,7 +172,7 @@ namespace Kibol_Alert.Services
                 }).ToList(),
             };
 
-            return new SuccessResponse<ClubVM>();
+            return new SuccessResponse<ClubVM>(clubDto);
         }
 
         public async Task<Response> GetClubs(int skip, int take)
