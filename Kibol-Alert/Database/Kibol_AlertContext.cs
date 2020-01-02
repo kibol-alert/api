@@ -60,7 +60,7 @@ namespace Kibol_Alert.Database
 
             modelBuilder
                 .Entity<ClubRelation>()
-                .HasKey(i => new { i.FirstClubId, i.SecondClubId, i.Relation });
+                .HasKey(i => new { i.FirstClubId, i.SecondClubId});
 
             modelBuilder
                 .Entity<ClubRelation>()

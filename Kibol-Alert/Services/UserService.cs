@@ -98,7 +98,7 @@ namespace Kibol_Alert.Services
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
             AddLog($"Edytowano użytkownika {user.UserName}, id: {user.Id}");
-            return new SuccessResponse<UserVM>();
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetUser(string id)
@@ -119,14 +119,14 @@ namespace Kibol_Alert.Services
                     League = user.Club.League,
                     LogoUri = user.Club.LogoUri,
                     City = user.Club.City,
-                    Chants = user.Club.Chants.ToList(),
+                    
                     IsDeleted = user.IsDeleted
                 },
                 IsBanned = user.IsBanned,
                 IsAdmin = user.IsAdmin
             };
 
-            return new SuccessResponse<UserVM>();
+            return new SuccessResponse<UserVM>(userDto);
         }
 
         public async Task<Response> GetUsers(int skip, int take)
@@ -149,14 +149,13 @@ namespace Kibol_Alert.Services
                         League = row.Club.League,
                         LogoUri = row.Club.LogoUri,
                         City = row.Club.City,
-                        Chants = row.Club.Chants.ToList(),
                         IsDeleted = row.IsDeleted
                     },
                     IsBanned = row.IsBanned,
                     IsAdmin = row.IsAdmin
                 }).ToListAsync();
 
-            return new SuccessResponse<List<UserVM>>();
+            return new SuccessResponse<List<UserVM>>(users);
         }
 
         public async Task<Response> GetLogs()
