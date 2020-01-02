@@ -119,7 +119,7 @@ namespace Kibol_Alert.Services
                     League = user.Club.League,
                     LogoUri = user.Club.LogoUri,
                     City = user.Club.City,
-                    Chants = user.Club.Chants.ToList(),
+                    
                     IsDeleted = user.IsDeleted
                 },
                 IsBanned = user.IsBanned,
@@ -149,7 +149,6 @@ namespace Kibol_Alert.Services
                         League = row.Club.League,
                         LogoUri = row.Club.LogoUri,
                         City = row.Club.City,
-                        Chants = row.Club.Chants.ToList(),
                         IsDeleted = row.IsDeleted
                     },
                     IsBanned = row.IsBanned,
