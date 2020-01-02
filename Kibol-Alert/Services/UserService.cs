@@ -112,7 +112,7 @@ namespace Kibol_Alert.Services
                 UserId = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
-                Club = new ClubBasicVM 
+                Club = new ClubBasicVM
                 {
                     Id = user.Club.Id,
                     Name = user.Club.Name,
@@ -152,8 +152,8 @@ namespace Kibol_Alert.Services
                         Chants = row.Club.Chants.ToList(),
                         IsDeleted = row.IsDeleted
                     },
-                IsBanned = row.IsBanned,
-                IsAdmin = row.IsAdmin
+                    IsBanned = row.IsBanned,
+                    IsAdmin = row.IsAdmin
                 }).ToListAsync();
 
             return new SuccessResponse<List<UserVM>>();
