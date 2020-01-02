@@ -78,9 +78,18 @@ namespace Kibol_Alert.Services
             {
                 FirstClubId = request.FirstClubId,
                 SecondClubId = request.SecondClubId,
+                Relation = request.Relation
+            };
+
+            var clubRelation2 = new ClubRelation()
+            {
+                FirstClubId = request.SecondClubId,
+                SecondClubId = request.FirstClubId,
+                Relation = request.Relation
             };
 
             await Context.ClubRelations.AddAsync(clubRelation);
+            await Context.ClubRelations.AddAsync(clubRelation2);
             await Context.SaveChangesAsync();
 
             AddLog($"Dodano relacje pomiędzy {request.FirstClubId} i {request.SecondClubId}");
@@ -160,9 +169,11 @@ namespace Kibol_Alert.Services
                 Longitude = club.Longitude,
                 Latitude = club.Latitude,
 
-                ClubRelations = club.RelationsWith.Select(row => new ClubRelationVM()
+                ClubRelations = club.InRelationsWith.Select(row => new ClubRelationVM()
                 { 
-                    FirstClubId = row.FirstClubId,
+                    ClubId = row.FirstClub.Id,
+                    ClubName = row.FirstClub.Name,
+                    Relation = row.Relation
                 }) .ToList(),
 
                 Fans = club.Fans.Select(row => new MemberVM()
@@ -193,9 +204,11 @@ namespace Kibol_Alert.Services
                     City = row.City,
                     Longitude = row.Longitude,
                     Latitude = row.Latitude,
-                    ClubRelations = row.RelationsWith.Select(row => new ClubRelationVM()
+                    ClubRelations = row.InRelationsWith.Select(row => new ClubRelationVM()
                     {
-                        FirstClubId = row.FirstClubId,
+                        ClubId = row.FirstClub.Id,
+                        ClubName = row.FirstClub.Name,
+                        Relation = row.Relation
                     }).ToList(),
 
                     Fans = row.Fans.Select(row => new MemberVM()
