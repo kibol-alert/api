@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using Kibol_Alert.Requests;
 using Kibol_Alert.Database;
@@ -57,7 +56,7 @@ namespace Kibol_Alert.Tests
             {
                 new object[]{ 
                     "test2@example.com",
-                    "test",
+                    "test234",
                     "Test123.",
                     "Test123.",
                     5

@@ -23,7 +23,7 @@ namespace Kibol_Alert.Tests
         }
 
         [Theory]
-        [MemberData(nameof(DataForBrawlTest))]
+        [MemberData(nameof(DataForAddBrawlTest))]
         public async void AddBrawlTest(string FirstClubName, string SecondClubName, DateTime date, Location location)
         {
             var request = new BrawlRequest()
@@ -38,6 +38,16 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+        public static IEnumerable<object[]> DataForAddBrawlTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    new DateTime(2020,01,01,12,00,00),
+                    new Location(123456.0f, 987654.0f)
+                }
+            };
 
         [Theory]
         [MemberData(nameof(DataForDeletetBrawlTest))]
@@ -57,6 +67,17 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+        public static IEnumerable<object[]> DataForDeletetBrawlTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    new DateTime(2020,01,01,12,00,00),
+                    new Location(123456.0f, 987654.0f),
+                    1
+                }
+            };
 
         [Theory]
         [MemberData(nameof(DataForEditBrawlTest))]
@@ -83,6 +104,21 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+        public static IEnumerable<object[]> DataForEditBrawlTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    new DateTime(2020,01,01,12,00,00),
+                    new Location(123456.0f, 987654.0f),
+                    1,
+                    "FirstClubName1Edited",
+                    "FirstClubName2Edited",
+                    new DateTime(2137,01,01,12,00,00),
+                    new Location(000000.0f, 000000.0f),
+                }
+            };
 
         [Theory]
         [MemberData(nameof(DataForDeletetBrawlTest))]
@@ -102,44 +138,5 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
-
-        public static IEnumerable<object[]> DataForBrawlTest =>
-            new List<object[]>
-            {
-                new object[]{
-                    "FirstClubName1",
-                    "FirstClubName2",
-                    new DateTime(2020,01,01,12,00,00),
-                    new Location(123456.0f, 987654.0f)
-                }
-            };
-        
-        public static IEnumerable<object[]> DataForDeletetBrawlTest =>
-            new List<object[]>
-            {
-                new object[]{
-                    "FirstClubName1",
-                    "FirstClubName2",
-                    new DateTime(2020,01,01,12,00,00),
-                    new Location(123456.0f, 987654.0f),
-                    1
-                }
-            };
-
-        public static IEnumerable<object[]> DataForEditBrawlTest =>
-            new List<object[]>
-            {
-                new object[]{
-                    "FirstClubName1",
-                    "FirstClubName2",
-                    new DateTime(2020,01,01,12,00,00),
-                    new Location(123456.0f, 987654.0f),
-                    1,
-                    "FirstClubName1Edited",
-                    "FirstClubName2Edited",
-                    new DateTime(2137,01,01,12,00,00),
-                    new Location(000000.0f, 000000.0f),
-                }
-            };
     }
 }

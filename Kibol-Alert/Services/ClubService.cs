@@ -7,8 +7,6 @@ using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Kibol_Alert.Services
@@ -34,86 +32,6 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        public async Task<Response> AddChant(ClubChantRequest request)
-        {
-            var chant = new Chant();
-            {
-                chant.Lyrics = request.Lyrics;
-            };
-            await Context.Chants.AddAsync(chant);
-            await Context.SaveChangesAsync();
-            AddLog($"Dodano przyśpiewke {request}");
-            return new SuccessResponse<bool>(true);
-        }
-
-        public async Task<Response> EditChant(int id, ClubChantRequest request)
-        {
-            var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
-            if (chant == null)
-            {
-                return new ErrorResponse("Przyśpiewki nie znaleziono!");
-            }
-            chant.Lyrics = request.Lyrics;
-            Context.Chants.Update(chant);
-            await Context.SaveChangesAsync();
-            AddLog($"Edytowano przyśpiewke {chant.Id}");
-            return new SuccessResponse<bool>(true);
-        }
-
-        public async Task<Response> DeleteChant(int id)
-        {
-            var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
-            if (chant == null)
-            {
-                return new ErrorResponse("Przyśpiewki nie znaleziono!");
-            }
-            Context.Chants.Remove(chant);
-            AddLog($"Usunięto przyśpiewke {chant.Id}");
-            return new SuccessResponse<bool>(true);
-        }
-
-        public async Task<Response> AddRelation(ClubRelationRequest request)
-        {
-            var clubRelation = new ClubRelation()
-            {
-                FirstClubId = request.FirstClubId,
-                SecondClubId = request.SecondClubId,
-            };
-
-            await Context.ClubRelations.AddAsync(clubRelation);
-            await Context.SaveChangesAsync();
-
-            AddLog($"Dodano relacje pomiędzy {request.FirstClubId} i {request.SecondClubId}");
-            return new SuccessResponse<bool>(true);
-        }
-
-        public async Task<Response> DeleteClub(int id)
-        {
-            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
-            if (club == null)
-            {
-                return new ErrorResponse("Klubu nie znaleziono!");
-            }
-            club.IsDeleted = true;
-            await Context.SaveChangesAsync();
-
-            AddLog($"Usunięto klub {club.Name} o id {club.Id}");
-            return new SuccessResponse<bool>(true);
-        }
-
-        public async Task<Response> DeleteRelation(int id)
-        {
-            var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClub.Id == id);
-            if (clubRelation == null)
-            {
-                return new ErrorResponse("Relacji nie znaleziono!");
-            }
-            Context.ClubRelations.Remove(clubRelation);
-            await Context.SaveChangesAsync();
-            AddLog($"Usunięto relacje pomiędzy {clubRelation.FirstClubId} i {clubRelation.SecondClubId} ");
-            return new SuccessResponse<bool>(true);
-        }
-
         public async Task<Response> EditClub(int id, ClubRequest request)
         {
             var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
@@ -132,6 +50,86 @@ namespace Kibol_Alert.Services
             await Context.SaveChangesAsync();
             AddLog($"Edytowano klub {club.Id}");
             return new SuccessResponse<ClubVM>();
+        }
+
+        public async Task<Response> DeleteClub(int id)
+        {
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
+            if (club == null)
+            {
+                return new ErrorResponse("Klubu nie znaleziono!");
+            }
+            club.IsDeleted = true;
+            await Context.SaveChangesAsync();
+
+            AddLog($"Usunieto klub {club.Name} o id {club.Id}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> AddChant(ClubChantRequest request)
+        {
+            var chant = new Chant();
+            {
+                chant.Lyrics = request.Lyrics;
+            };
+            await Context.Chants.AddAsync(chant);
+            await Context.SaveChangesAsync();
+            AddLog($"Dodano przyspiewke {request}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> EditChant(int id, ClubChantRequest request)
+        {
+            var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
+            if (chant == null)
+            {
+                return new ErrorResponse("Przyśpiewki nie znaleziono!");
+            }
+            chant.Lyrics = request.Lyrics;
+            Context.Chants.Update(chant);
+            await Context.SaveChangesAsync();
+            AddLog($"Edytowano przyspiewke {chant.Id}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> DeleteChant(int id)
+        {
+            var chant = await Context.Chants.FirstOrDefaultAsync(i => i.Id == id);
+            if (chant == null)
+            {
+                return new ErrorResponse("Przyśpiewki nie znaleziono!");
+            }
+            Context.Chants.Remove(chant);
+            AddLog($"Usunieto przyspiewke {chant.Id}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> AddRelation(ClubRelationRequest request)
+        {
+            var clubRelation = new ClubRelation()
+            {
+                FirstClubId = request.FirstClubId,
+                SecondClubId = request.SecondClubId,
+            };
+
+            await Context.ClubRelations.AddAsync(clubRelation);
+            await Context.SaveChangesAsync();
+
+            AddLog($"Dodano relacje pomiedzy {request.FirstClubId} i {request.SecondClubId}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> DeleteRelation(int id)
+        {
+            var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClub.Id == id);
+            if (clubRelation == null)
+            {
+                return new ErrorResponse("Relacji nie znaleziono!");
+            }
+            Context.ClubRelations.Remove(clubRelation);
+            await Context.SaveChangesAsync();
+            AddLog($"Usunieto relacje pomiędzy {clubRelation.FirstClubId} i {clubRelation.SecondClubId} ");
+            return new SuccessResponse<bool>(true);
         }
 
         public async Task<Response> GetClub(int id)

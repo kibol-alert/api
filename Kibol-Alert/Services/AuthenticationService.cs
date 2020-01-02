@@ -43,7 +43,7 @@ namespace Kibol_Alert.Services
             if (!result.Succeeded)
                 return new ErrorResponse("Rejestracja się nie powiodła");
 
-            AddLog($"Konto {request.UserName} zostało stworzone");
+            AddLog($"Konto {request.UserName} zostalo stworzone");
             return new SuccessResponse<bool>(true);
         }
 
@@ -52,13 +52,13 @@ namespace Kibol_Alert.Services
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 
             if (!result.Succeeded)
-                return new ErrorResponse("Ksywa lub hasło jest błędne!");
+                return new ErrorResponse("Ksywa lub haslo jest bledne!");
 
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
             if (token == null)
                 return new ErrorResponse("Nie znaleziono użytkownika");
 
-            AddLog($"{request.UserName} zalogował się na konto");
+            AddLog($"{request.UserName} zalogowal sie na konto");
             return new SuccessResponse<JwtToken>(token);
         }
 

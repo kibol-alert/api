@@ -29,7 +29,7 @@ namespace Kibol_Alert.Services
 
             await Context.Brawls.AddAsync(brawl);
             await Context.SaveChangesAsync();
-            AddLog($"Stworzono ustawkę {request.FirstClubName} vs {request.SecondClubName}");
+            AddLog($"Stworzono ustawke {request.FirstClubName} vs {request.SecondClubName}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -61,7 +61,7 @@ namespace Kibol_Alert.Services
             
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
-            AddLog($"Edytowane ustawkę {brawl.Id}");
+            AddLog($"Edytowane ustawke {brawl.Id}");
             return new SuccessResponse<BrawlVM>();
         }
 

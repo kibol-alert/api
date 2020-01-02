@@ -27,7 +27,7 @@ namespace Kibol_Alert.Services
             user.IsBanned = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
-            AddLog($"Zbanowano użytkownika {user.UserName}, id: {user.Id}");
+            AddLog($"Zbanowano uzytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -41,7 +41,7 @@ namespace Kibol_Alert.Services
             user.IsBanned = false;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
-            AddLog($"Odbanowano użytkownika {user.UserName}, id: {user.Id}");
+            AddLog($"Odbanowano uzytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -55,7 +55,7 @@ namespace Kibol_Alert.Services
             user.IsDeleted = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
-            AddLog($"Usunięto użytkownika {user.UserName}, id: {user.Id}");
+            AddLog($"Usunieto uzytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -69,7 +69,7 @@ namespace Kibol_Alert.Services
             user.IsDeleted = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
-            AddLog($"Nadano uprawnienia admina użytkownikowi {user.UserName}, id: {user.Id}");
+            AddLog($"Nadano uprawnienia admina uzytkownikowi {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -83,7 +83,7 @@ namespace Kibol_Alert.Services
             user.IsDeleted = false;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
-            AddLog($"Zabrano uprawnienia admina użytkownikowi {user.UserName}, id: {user.Id}");
+            AddLog($"Zabrano uprawnienia admina uzytkownikowi {user.UserName}, id: {user.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -97,7 +97,7 @@ namespace Kibol_Alert.Services
             user.ClubId = request.ClubId;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
-            AddLog($"Edytowano użytkownika {user.UserName}, id: {user.Id}");
+            AddLog($"Edytowano uzytkownika {user.UserName}, id: {user.Id}");
             return new SuccessResponse<UserVM>();
         }
 
