@@ -4,14 +4,16 @@ using Kibol_Alert.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Kibol_Alert.Migrations
 {
     [DbContext(typeof(Kibol_AlertContext))]
-    partial class Kibol_AlertContextModelSnapshot : ModelSnapshot
+    [Migration("20200106184532_'brawls_lonlat -v")]
+    partial class brawls_lonlatv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +55,7 @@ namespace Kibol_Alert.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClubId")
+                    b.Property<int?>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<string>("Lyrics")
@@ -352,9 +354,7 @@ namespace Kibol_Alert.Migrations
                 {
                     b.HasOne("Kibol_Alert.Models.Club", "Club")
                         .WithMany("Chants")
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClubId");
                 });
 
             modelBuilder.Entity("Kibol_Alert.Models.ClubRelation", b =>

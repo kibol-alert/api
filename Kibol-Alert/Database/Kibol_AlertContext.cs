@@ -43,16 +43,17 @@ namespace Kibol_Alert.Database
             modelBuilder
                 .Entity<Club>()
                 .HasMany(i => i.Chants)
+                .WithOne(i => i.Club)
+                .HasForeignKey(i => i.ClubId);
+
+            modelBuilder
+                .Entity<Club>()
+                .HasMany(i => i.Chants)
                 .WithOne(i => i.Club);
 
             modelBuilder
                 .Entity<Chant>()
                 .HasKey(i => i.Id);
-
-            modelBuilder
-                .Entity<Chant>()
-                .HasOne(i => i.Club)
-                .WithMany(i => i.Chants);
 
             modelBuilder
                 .Entity<Brawl>()
@@ -74,10 +75,6 @@ namespace Kibol_Alert.Database
                 .HasOne(i => i.SecondClub)
                 .WithMany(i => i.InRelationsWith)
                 .HasForeignKey(i => i.SecondClubId);
-
-            modelBuilder
-                .Entity<Location>()
-                .HasKey(i => i.Id);
 
             modelBuilder
                 .Entity<Log>()

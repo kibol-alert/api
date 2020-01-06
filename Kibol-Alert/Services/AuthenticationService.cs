@@ -54,6 +54,14 @@ namespace Kibol_Alert.Services
             if (!result.Succeeded)
                 return new ErrorResponse("Ksywa lub hasło jest błędne!");
 
+            var user = Context.Users.FirstOrDefault(i => i.UserName == request.UserName);
+
+            if(user.IsBanned)
+                return new ErrorResponse("Konto zostało zbanowane!");
+
+            if (user.IsDeleted)
+                return new ErrorResponse("Konto zostało usunięte!");
+
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
             if (token == null)
                 return new ErrorResponse("Nie znaleziono użytkownika");

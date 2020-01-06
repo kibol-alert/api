@@ -12,7 +12,7 @@ namespace Kibol_Alert.ViewModels
         public string City { get; set; }
         public virtual ICollection<ClubRelationVM> ClubRelations { get; set; }
         public virtual ICollection<MemberVM> Fans { get; set; }
-        public virtual ICollection<Chant> Chants { get; set; }
+        public virtual ICollection<ChantVM> Chants { get; set; }
         public float? Longitude { get; set; }
         public float? Latitude { get; set; }
         public bool IsDeleted { get; set; }

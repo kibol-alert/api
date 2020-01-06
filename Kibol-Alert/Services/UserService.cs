@@ -119,7 +119,6 @@ namespace Kibol_Alert.Services
                     League = user.Club.League,
                     LogoUri = user.Club.LogoUri,
                     City = user.Club.City,
-                    
                     IsDeleted = user.IsDeleted
                 },
                 IsBanned = user.IsBanned,

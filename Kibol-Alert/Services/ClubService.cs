@@ -36,9 +36,9 @@ namespace Kibol_Alert.Services
 
         public async Task<Response> AddChant(ClubChantRequest request)
         {
-            var chant = new Chant();
-            {
-                chant.Lyrics = request.Lyrics;
+            var chant = new Chant(){
+                ClubId = request.ClubId,
+                Lyrics = request.Lyrics
             };
             await Context.Chants.AddAsync(chant);
             await Context.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace Kibol_Alert.Services
         {
             var club = await Context.Clubs
                 .Include(i => i.RelationsWith)
-                .Include(i => i.InRelationsWith)
+                .Include(i => i.InRelationsWith).ThenInclude(relation => relation.FirstClub)
                 .Include(i => i.Fans)
                 .Include(i => i.Chants)
                 .FirstOrDefaultAsync(i => !i.IsDeleted && i.Id == id);
@@ -165,9 +165,14 @@ namespace Kibol_Alert.Services
                 League = club.League,
                 LogoUri = club.LogoUri,
                 City = club.City,
-                Chants = club.Chants,
                 Longitude = club.Longitude,
                 Latitude = club.Latitude,
+
+                Chants = club.Chants.Select(row => new ChantVM()
+                {
+                    Id = row.Id,
+                    Lyrics = row.Lyrics
+                }).ToList(),
 
                 ClubRelations = club.InRelationsWith.Select(row => new ClubRelationVM()
                 { 
@@ -195,6 +200,7 @@ namespace Kibol_Alert.Services
                 .Include(i => i.RelationsWith)
                 .Include(i => i.InRelationsWith)
                 .Include(i => i.Fans)
+                .Include(i => i.Chants)
                 .Select(row => new ClubVM()
                 {
                     Id = row.Id,
@@ -204,6 +210,11 @@ namespace Kibol_Alert.Services
                     City = row.City,
                     Longitude = row.Longitude,
                     Latitude = row.Latitude,
+                    Chants = row.Chants.Select(row=> new ChantVM()
+                    {
+                        Id = row.Id,
+                        Lyrics = row.Lyrics
+                    }).ToList(),
                     ClubRelations = row.InRelationsWith.Select(row => new ClubRelationVM()
                     {
                         ClubId = row.FirstClub.Id,
