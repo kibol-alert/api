@@ -52,6 +52,61 @@ namespace Kibol_Alert.Tests
             Assert.True(result.Success);
 
         }
+        
+        
+        //[Theory]
+        //[MemberData(nameof(DataForRegister))]
+        //public async void LoginTest(string email, string username, string password, string confirmedPassword, int clubId)
+        //{
+        //    var registerRequest = new RegisterRequest()
+        //    {
+        //        Email = email,
+        //        UserName = username,
+        //        Password = password,
+        //        ConfirmedPassword = confirmedPassword,
+        //        ClubId = clubId
+        //    };
+
+        //    var loginRequest = new LoginRequest()
+        //    {
+        //        UserName = username,
+        //        Password = password,
+        //    };
+
+        //    var fakeUser = await _authorizationService.Register(registerRequest);
+        //    var result = await _authorizationService.Login(loginRequest);
+
+            
+        //    Assert.True(result.Success);
+        //}
+
+        //[Theory]
+        //[MemberData(nameof(DataForRegister))]
+        //public async void LogoutTest(string email, string username, string password, string confirmedPassword, int clubId)
+        //{
+        //    var registerRequest = new RegisterRequest()
+        //    {
+        //        Email = email,
+        //        UserName = username,
+        //        Password = password,
+        //        ConfirmedPassword = confirmedPassword,
+        //        ClubId = clubId
+        //    };
+
+        //    var loginRequest = new LoginRequest()
+        //    {
+        //        UserName = username,
+        //        Password = password,
+        //    };
+
+        //    var fakeRegister = await _authorizationService.Register(registerRequest);
+        //    var fakeLogin = await _authorizationService.Login(loginRequest);
+        //    var result = await _authorizationService.Logout();
+
+        //    Assert.True(result.Success);
+        //}
+        
+
         public static IEnumerable<object[]> DataForRegister =>
             new List<object[]>
             {

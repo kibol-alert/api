@@ -161,6 +161,26 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+
+        [Theory]
+        [MemberData(nameof(DataForUserTest))]
+        public async void GetUserTest(string email, string username, string password, string confirmedPassword, int clubId)
+        {
+            var request = new RegisterRequest()
+            {
+                Email = email,
+                UserName = username,
+                Password = password,
+                ConfirmedPassword = confirmedPassword,
+                ClubId = clubId
+            };
+
+            var fakeUser = await _authorizationService.Register(request);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
+            var result = await _userService.GetUser(fODUser.Id);
+
+            Assert.True(result.Success);
+        }
         public static IEnumerable<object[]> DataForEditUserTest =>
             new List<object[]>
             {
