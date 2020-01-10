@@ -117,14 +117,14 @@ namespace Kibol_Alert.Tests
                     "FirstClubName1",
                     "FirstClubName2",
                     "2020.01.01 12:00:00",
-                    123456.0f, 
-                    987654.0f,
+                    123456.7, 
+                    987654.3f,
                     1,
                     "FirstClubName1Edited",
                     "FirstClubName2Edited",
                     "2137.01.01 12:00:00",
-                    000000.0f, 
-                    000000.0f
+                    111111.1f, 
+                    999999.9f
                 }
             };
 
