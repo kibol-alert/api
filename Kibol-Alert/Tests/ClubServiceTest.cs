@@ -189,24 +189,6 @@ namespace Kibol_Alert.Tests
             Assert.True(result.Success);
         }
 
-        [Theory]
-        [MemberData(nameof(DataForRelationTest))]
-        public async void DeleteRelationTest(int firstClubId, int secondClubId, RelationType relation)
-        {
-            var request = new ClubRelationRequest()
-            {
-                FirstClubId = firstClubId,
-                SecondClubId = secondClubId,
-                Relation = relation
-            };
-
-            var fakeRelation = await _clubService.AddRelation(request);
-            var fODRelation = await _contextBuilder.Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClubId == firstClubId);
-            var result = await _clubService.DeleteRelation(fODRelation.FirstClub.Id);
-
-            Assert.True(result.Success);
-        }
-
         public static IEnumerable<object[]> DataForClubTest =>
             new List<object[]>
             {

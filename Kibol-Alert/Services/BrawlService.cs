@@ -5,6 +5,7 @@ using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -100,9 +101,12 @@ namespace Kibol_Alert.Services
                     Date = row.Date,
                     Longitude = row.Longitude,
                     Latitude = row.Latitude
-        }).ToListAsync();
+                })
+                .ToListAsync();
 
-            return new SuccessResponse<List<BrawlVM>>(brawls);
+            var brawlsDto = brawls.Where(row => DateTime.Parse(row.Date) > DateTime.Now).ToList();
+
+            return new SuccessResponse<List<BrawlVM>>(brawlsDto);
         }
     }
 }
