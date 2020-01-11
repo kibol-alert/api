@@ -7,8 +7,6 @@ using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Kibol_Alert.Services
@@ -31,6 +29,46 @@ namespace Kibol_Alert.Services
             await Context.SaveChangesAsync();
 
             AddLog($"Dodano klub {request.Name}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> DeleteClub(int id)
+        {
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
+            if (club == null)
+            {
+                return new ErrorResponse("Klubu nie znaleziono!");
+            }
+            club.IsDeleted = true;
+            await Context.SaveChangesAsync();
+
+            AddLog($"Usunięto klub {club.Name} o id {club.Id}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> EditClub(int id, ClubRequest request)
+        {
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
+
+            if (club == null)
+            {
+                return new ErrorResponse("Klubu nie znaleziono!");
+            }
+            if (request.Name != null)
+                club.Name = request.Name;
+            if (request.League != null)
+                club.League = request.League;
+            if (request.LogoUri != null)
+                club.LogoUri = request.LogoUri;
+            if (request.Longitude != null)
+                club.Longitude = request.Longitude;
+            if (request.Latitude != null)
+                club.Latitude = request.Latitude;
+
+            Context.Clubs.Update(club);
+
+            await Context.SaveChangesAsync();
+            AddLog($"Edytowano klub {club.Id}");
             return new SuccessResponse<bool>(true);
         }
 
@@ -96,20 +134,6 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        public async Task<Response> DeleteClub(int id)
-        {
-            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
-            if (club == null)
-            {
-                return new ErrorResponse("Klubu nie znaleziono!");
-            }
-            club.IsDeleted = true;
-            await Context.SaveChangesAsync();
-
-            AddLog($"Usunięto klub {club.Name} o id {club.Id}");
-            return new SuccessResponse<bool>(true);
-        }
-
         public async Task<Response> DeleteRelation(int id)
         {
             var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClub.Id == id);
@@ -120,32 +144,6 @@ namespace Kibol_Alert.Services
             Context.ClubRelations.Remove(clubRelation);
             await Context.SaveChangesAsync();
             AddLog($"Usunięto relacje pomiędzy {clubRelation.FirstClubId} i {clubRelation.SecondClubId} ");
-            return new SuccessResponse<bool>(true);
-        }
-
-        public async Task<Response> EditClub(int id, ClubRequest request)
-        {
-            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
-
-            if (club == null)
-            {
-                return new ErrorResponse("Klubu nie znaleziono!");
-            }
-            if(request.Name != null)
-                club.Name = request.Name;
-            if (request.League != null)
-                club.League = request.League;
-            if (request.LogoUri != null)
-                club.LogoUri = request.LogoUri;
-            if (request.Longitude != null)
-                club.Longitude = request.Longitude;
-            if (request.Latitude != null)
-                club.Latitude = request.Latitude;
-
-            Context.Clubs.Update(club);
-
-            await Context.SaveChangesAsync();
-            AddLog($"Edytowano klub {club.Id}");
             return new SuccessResponse<bool>(true);
         }
 

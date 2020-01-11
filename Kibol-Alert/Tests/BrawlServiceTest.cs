@@ -117,14 +117,14 @@ namespace Kibol_Alert.Tests
                     "FirstClubName1",
                     "FirstClubName2",
                     "2020.01.01 12:00:00",
-                    123456.0f, 
-                    987654.0f,
+                    123456.7, 
+                    987654.3f,
                     1,
                     "FirstClubName1Edited",
                     "FirstClubName2Edited",
                     "2137.01.01 12:00:00",
-                    000000.0f, 
-                    000000.0f
+                    111111.1f, 
+                    999999.9f
                 }
             };
 
@@ -147,5 +147,51 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+
+        [Theory]
+        [MemberData(nameof(DataForGetBrawlsTest))]
+        public async void GetBrawlsTest(string firstClubName, string secondClubName, string date, float longitude, float latitude, string firstClubName2, string secondClubName2, string date2, float longitude2, float latitude2, int skip, int take)
+        {
+            var request1 = new BrawlRequest()
+            {
+                FirstClubName = firstClubName,
+                SecondClubName = secondClubName,
+                Date = date,
+                Longitude = longitude,
+                Latitude = latitude
+            };
+            var request2 = new BrawlRequest()
+            {
+                FirstClubName = firstClubName2,
+                SecondClubName = secondClubName2,
+                Date = date2,
+                Longitude = longitude2,
+                Latitude = latitude2
+            };
+
+            var fakeBrawl = await _brawlService.AddBrawl(request1);
+            var fakeBrawl2 = await _brawlService.AddBrawl(request2);
+            var result = await _brawlService.GetBrawls(skip, take);
+
+            Assert.True(result.Success);
+        }
+        public static IEnumerable<object[]> DataForGetBrawlsTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    "2020.01.01 12:00:00",
+                    123456.7,
+                    987654.3f,
+                    "FirstClubName1Edited",
+                    "FirstClubName2Edited",
+                    "2137.01.01 12:00:00",
+                    111111.1f,
+                    999999.9f,
+                    0,
+                    2
+                }
+            };
     }
 }

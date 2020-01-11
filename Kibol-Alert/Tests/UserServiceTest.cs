@@ -38,7 +38,7 @@ namespace Kibol_Alert.Tests
 
         [Theory]
         [MemberData(nameof(DataForUserTest))]
-        public async void BanUserTest(string email, string username, string password, string confirmedPassword, int clubId, string userId)
+        public async void BanUserTest(string email, string username, string password, string confirmedPassword, int clubId)
         {
             var request = new RegisterRequest()
             {
@@ -50,7 +50,7 @@ namespace Kibol_Alert.Tests
             };
 
             var fakeUser = await _authorizationService.Register(request);
-            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
             var result = await _userService.BanUser(fODUser.Id);
 
             Assert.True(result.Success);
@@ -58,7 +58,7 @@ namespace Kibol_Alert.Tests
 
         [Theory]
         [MemberData(nameof(DataForUserTest))]
-        public async void UnBanUserTest(string email, string username, string password, string confirmedPassword, int clubId, string userId)
+        public async void UnBanUserTest(string email, string username, string password, string confirmedPassword, int clubId)
         {
             var request = new RegisterRequest()
             {
@@ -70,7 +70,8 @@ namespace Kibol_Alert.Tests
             };
 
             var fakeUser = await _authorizationService.Register(request);
-            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
+            await _userService.BanUser(fODUser.Id);
             var result = await _userService.UnbanUser(fODUser.Id);
 
             Assert.True(result.Success);
@@ -78,7 +79,7 @@ namespace Kibol_Alert.Tests
 
         [Theory]
         [MemberData(nameof(DataForUserTest))]
-        public async void DeleteUserTest(string email, string username, string password, string confirmedPassword, int clubId, string userId)
+        public async void DeleteUserTest(string email, string username, string password, string confirmedPassword, int clubId)
         {
             var request = new RegisterRequest()
             {
@@ -90,7 +91,7 @@ namespace Kibol_Alert.Tests
             };
 
             var fakeUser = await _authorizationService.Register(request);
-            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
             var result = await _userService.DeleteUser(fODUser.Id);
 
             Assert.True(result.Success);
@@ -98,7 +99,7 @@ namespace Kibol_Alert.Tests
 
         [Theory]
         [MemberData(nameof(DataForUserTest))]
-        public async void GiveAdminUserTest(string email, string username, string password, string confirmedPassword, int clubId, string userId)
+        public async void GiveAdminUserTest(string email, string username, string password, string confirmedPassword, int clubId)
         {
             var request = new RegisterRequest()
             {
@@ -110,7 +111,7 @@ namespace Kibol_Alert.Tests
             };
 
             var fakeUser = await _authorizationService.Register(request);
-            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
             var result = await _userService.GiveAdmin(fODUser.Id);
 
             Assert.True(result.Success);
@@ -118,7 +119,7 @@ namespace Kibol_Alert.Tests
 
         [Theory]
         [MemberData(nameof(DataForUserTest))]
-        public async void TakeAdminUserTest(string email, string username, string password, string confirmedPassword, int clubId, string userId)
+        public async void TakeAdminUserTest(string email, string username, string password, string confirmedPassword, int clubId)
         {
             var request = new RegisterRequest()
             {
@@ -130,7 +131,8 @@ namespace Kibol_Alert.Tests
             };
 
             var fakeUser = await _authorizationService.Register(request);
-            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
+            await _userService.GiveAdmin(fODUser.Id);
             var result = await _userService.TakeAdmin(fODUser.Id);
 
             Assert.True(result.Success);
@@ -138,15 +140,15 @@ namespace Kibol_Alert.Tests
 
         [Theory]
         [MemberData(nameof(DataForEditUserTest))]
-        public async void EditUserTest(string email1, string username1, string password1, string confirmedPassword1, int clubId1, string userId, int clubId2)
+        public async void EditUserTest(string email, string username, string password, string confirmedPassword, int clubId, int clubId2)
         {
             var request1 = new RegisterRequest()
             {
-                Email = email1,
-                UserName = username1,
-                Password = password1,
-                ConfirmedPassword = confirmedPassword1,
-                ClubId = clubId1
+                Email = email,
+                UserName = username,
+                Password = password,
+                ConfirmedPassword = confirmedPassword,
+                ClubId = clubId
             };
             var request2 = new UserRequest()
             {
@@ -154,8 +156,28 @@ namespace Kibol_Alert.Tests
             };
 
             var fakeUser = await _authorizationService.Register(request1);
-            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
             var result = await _userService.EditUser(fODUser.Id, request2);
+
+            Assert.True(result.Success);
+        }
+
+        [Theory]
+        [MemberData(nameof(DataForUserTest))]
+        public async void GetUserTest(string email, string username, string password, string confirmedPassword, int clubId)
+        {
+            var request = new RegisterRequest()
+            {
+                Email = email,
+                UserName = username,
+                Password = password,
+                ConfirmedPassword = confirmedPassword,
+                ClubId = clubId
+            };
+
+            var fakeUser = await _authorizationService.Register(request);
+            var fODUser = await _contextBuilder.Context.Users.FirstOrDefaultAsync(i => i.UserName == username);
+            var result = await _userService.GetUser(fODUser.Id);
 
             Assert.True(result.Success);
         }
@@ -164,11 +186,10 @@ namespace Kibol_Alert.Tests
             {
                 new object[]{
                     "UserTest@example.com",
-                    "Usertest654",
+                    "TestUser",
                     "Test123.",
                     "Test123.",
-                    5,
-                    "99",
+                    1,
                     6
                 }
             };
@@ -177,11 +198,10 @@ namespace Kibol_Alert.Tests
             {
                 new object[]{
                     "UserTest@example.com",
-                    "Usertest789",
+                    "test",
                     "Test123.",
                     "Test123.",
-                    5,
-                    "125"
+                    1,
                 }
             };
 

@@ -66,7 +66,7 @@ namespace Kibol_Alert.Services
             {
                 return new ErrorResponse("Użytkownika nie znaleziono lub już jest adminem!");
             }
-            user.IsDeleted = true;
+            user.IsAdmin = true;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
             AddLog($"Nadano uprawnienia admina użytkownikowi {user.UserName}, id: {user.Id}");
@@ -80,7 +80,7 @@ namespace Kibol_Alert.Services
             {
                 return new ErrorResponse("Użytkownika nie znaleziono lub nie jest adminem!");
             }
-            user.IsDeleted = false;
+            user.IsAdmin = false;
             Context.Users.Update(user);
             await Context.SaveChangesAsync();
             AddLog($"Zabrano uprawnienia admina użytkownikowi {user.UserName}, id: {user.Id}");
