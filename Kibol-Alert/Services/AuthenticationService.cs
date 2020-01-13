@@ -5,7 +5,6 @@ using Kibol_Alert.Database;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using AutoWrapper.Wrappers;
 using Kibol_Alert.Responses;
 
 namespace Kibol_Alert.Services
@@ -18,7 +17,7 @@ namespace Kibol_Alert.Services
 
         public AuthenticationService(Kibol_AlertContext context, SignInManager<User> signInManager,
             UserManager<User> userManager,
-            IJwtHelper jwtHelper) : base(context)
+            IJwtHelper jwtHelper, ILoggerService logger) : base(context, logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -28,9 +27,9 @@ namespace Kibol_Alert.Services
         public async Task<Response> Register(RegisterRequest request)
         {
             if (Context.Users.Any(i => i.Email == request.Email))
-                return new ErrorResponse("Email Error");
+                return new ErrorResponse("Błędny email!\nPrawidłowy format: example@example.com");
             if (request.Password != request.ConfirmedPassword)
-                return new ErrorResponse("Passwords are not the same");
+                return new ErrorResponse("Hasła nie są identyczne");
 
             var user = new User()
             {
@@ -42,9 +41,9 @@ namespace Kibol_Alert.Services
             var result = await _userManager.CreateAsync(user, request.Password);
 
             if (!result.Succeeded)
-            {
-                return new ErrorResponse("Registration failed");
-            }
+                return new ErrorResponse("Rejestracja się nie powiodła");
+
+            AddLog($"Konto {request.UserName} zostało stworzone");
             return new SuccessResponse<bool>(true);
         }
 
@@ -53,13 +52,21 @@ namespace Kibol_Alert.Services
             var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, true, false);
 
             if (!result.Succeeded)
-                return new ErrorResponse("Login failed");
+                return new ErrorResponse("Ksywa lub hasło jest błędne!");
+
+            var user = Context.Users.FirstOrDefault(i => i.UserName == request.UserName);
+
+            if(user.IsBanned)
+                return new ErrorResponse("Konto zostało zbanowane!");
+
+            if (user.IsDeleted)
+                return new ErrorResponse("Konto zostało usunięte!");
 
             var token = _jwtHelper.GenerateJwtToken(request.UserName);
             if (token == null)
-            {
-                return new ErrorResponse("User doesn't exist");
-            }
+                return new ErrorResponse("Nie znaleziono użytkownika");
+
+            AddLog($"{request.UserName} zalogował się na konto");
             return new SuccessResponse<JwtToken>(token);
         }
 

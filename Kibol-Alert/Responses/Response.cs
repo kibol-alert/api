@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Kibol_Alert.Responses
 {
@@ -10,8 +7,7 @@ namespace Kibol_Alert.Responses
     {
         public Response() { }
         [JsonConstructor]
-        public Response( bool success) {
-            Console.WriteLine(success);
+        public Response(bool success) {
             Success = success;
         }
 

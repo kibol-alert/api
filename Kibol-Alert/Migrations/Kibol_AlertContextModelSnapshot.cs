@@ -15,7 +15,7 @@ namespace Kibol_Alert.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.1")
+                .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -26,24 +26,22 @@ namespace Kibol_Alert.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstClubName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("LocationLatitude")
+                    b.Property<float>("Latitude")
                         .HasColumnType("real");
 
-                    b.Property<float?>("LocationLongitude")
+                    b.Property<float>("Longitude")
                         .HasColumnType("real");
 
                     b.Property<string>("SecondClubName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationLatitude", "LocationLongitude");
 
                     b.ToTable("Brawls");
                 });
@@ -55,7 +53,7 @@ namespace Kibol_Alert.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClubId")
+                    b.Property<int>("ClubId")
                         .HasColumnType("int");
 
                     b.Property<string>("Lyrics")
@@ -81,11 +79,17 @@ namespace Kibol_Alert.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<float?>("Latitude")
+                        .HasColumnType("real");
+
                     b.Property<string>("League")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LogoUri")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("Longitude")
+                        .HasColumnType("real");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -106,24 +110,32 @@ namespace Kibol_Alert.Migrations
                     b.Property<int>("Relation")
                         .HasColumnType("int");
 
-                    b.HasKey("FirstClubId", "SecondClubId", "Relation");
+                    b.HasKey("FirstClubId", "SecondClubId");
 
                     b.HasIndex("SecondClubId");
 
                     b.ToTable("ClubRelations");
                 });
 
-            modelBuilder.Entity("Kibol_Alert.Models.Location", b =>
+            modelBuilder.Entity("Kibol_Alert.Models.Log", b =>
                 {
-                    b.Property<float>("Latitude")
-                        .HasColumnType("real");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("Longitude")
-                        .HasColumnType("real");
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Latitude", "Longitude");
+                    b.Property<string>("MethodName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Location");
+                    b.Property<string>("TimeStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Kibol_Alert.Models.User", b =>
@@ -336,18 +348,13 @@ namespace Kibol_Alert.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Kibol_Alert.Models.Brawl", b =>
-                {
-                    b.HasOne("Kibol_Alert.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationLatitude", "LocationLongitude");
-                });
-
             modelBuilder.Entity("Kibol_Alert.Models.Chant", b =>
                 {
                     b.HasOne("Kibol_Alert.Models.Club", "Club")
                         .WithMany("Chants")
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Kibol_Alert.Models.ClubRelation", b =>

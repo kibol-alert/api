@@ -10,8 +10,6 @@ using Kibol_Alert.Helpers;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.Database;
 
-
-
 namespace Kibol_Alert.Services
 {
     public class JwtHelper : IJwtHelper

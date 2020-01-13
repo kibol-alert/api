@@ -1,10 +1,4 @@
-﻿using AutoWrapper.Wrappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Kibol_Alert.Responses
+﻿namespace Kibol_Alert.Responses
 {
     public class SuccessResponse<T> : Response
     {
@@ -13,7 +7,7 @@ namespace Kibol_Alert.Responses
         {
         }
         public SuccessResponse(T responseData)
-            : base( true)
+            : base(true)
         {
             Payload = responseData;
         }

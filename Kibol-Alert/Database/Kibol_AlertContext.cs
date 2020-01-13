@@ -15,6 +15,7 @@ namespace Kibol_Alert.Database
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Chant> Chants { get; set; }
         public DbSet<Brawl> Brawls { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,6 +43,12 @@ namespace Kibol_Alert.Database
             modelBuilder
                 .Entity<Club>()
                 .HasMany(i => i.Chants)
+                .WithOne(i => i.Club)
+                .HasForeignKey(i => i.ClubId);
+
+            modelBuilder
+                .Entity<Club>()
+                .HasMany(i => i.Chants)
                 .WithOne(i => i.Club);
 
             modelBuilder
@@ -49,17 +56,12 @@ namespace Kibol_Alert.Database
                 .HasKey(i => i.Id);
 
             modelBuilder
-                .Entity<Chant>()
-                .HasOne(i => i.Club)
-                .WithMany(i => i.Chants);
-
-            modelBuilder
                 .Entity<Brawl>()
                 .HasKey(i => i.Id);
 
             modelBuilder
                 .Entity<ClubRelation>()
-                .HasKey(i => new { i.FirstClubId, i.SecondClubId, i.Relation });
+                .HasKey(i => new { i.FirstClubId, i.SecondClubId});
 
             modelBuilder
                 .Entity<ClubRelation>()
@@ -75,8 +77,8 @@ namespace Kibol_Alert.Database
                 .HasForeignKey(i => i.SecondClubId);
 
             modelBuilder
-                .Entity<Location>()
-                .HasKey(i => new { i.Latitude, i.Longitude });
+                .Entity<Log>()
+                .HasKey(i => i.Id);
         }
     }
 }
