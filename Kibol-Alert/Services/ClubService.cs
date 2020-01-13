@@ -7,8 +7,6 @@ using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Kibol_Alert.Services
@@ -34,11 +32,51 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
+        public async Task<Response> DeleteClub(int id)
+        {
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
+            if (club == null)
+            {
+                return new ErrorResponse("Klubu nie znaleziono!");
+            }
+            club.IsDeleted = true;
+            await Context.SaveChangesAsync();
+
+            AddLog($"Usunięto klub {club.Name} o id {club.Id}");
+            return new SuccessResponse<bool>(true);
+        }
+
+        public async Task<Response> EditClub(int id, ClubRequest request)
+        {
+            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
+
+            if (club == null)
+            {
+                return new ErrorResponse("Klubu nie znaleziono!");
+            }
+            if (request.Name != null)
+                club.Name = request.Name;
+            if (request.League != null)
+                club.League = request.League;
+            if (request.LogoUri != null)
+                club.LogoUri = request.LogoUri;
+            if (request.Longitude != null)
+                club.Longitude = request.Longitude;
+            if (request.Latitude != null)
+                club.Latitude = request.Latitude;
+
+            Context.Clubs.Update(club);
+
+            await Context.SaveChangesAsync();
+            AddLog($"Edytowano klub {club.Id}");
+            return new SuccessResponse<bool>(true);
+        }
+
         public async Task<Response> AddChant(ClubChantRequest request)
         {
-            var chant = new Chant();
-            {
-                chant.Lyrics = request.Lyrics;
+            var chant = new Chant(){
+                ClubId = request.ClubId,
+                Lyrics = request.Lyrics
             };
             await Context.Chants.AddAsync(chant);
             await Context.SaveChangesAsync();
@@ -96,20 +134,6 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        public async Task<Response> DeleteClub(int id)
-        {
-            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
-            if (club == null)
-            {
-                return new ErrorResponse("Klubu nie znaleziono!");
-            }
-            club.IsDeleted = true;
-            await Context.SaveChangesAsync();
-
-            AddLog($"Usunięto klub {club.Name} o id {club.Id}");
-            return new SuccessResponse<bool>(true);
-        }
-
         public async Task<Response> DeleteRelation(int id)
         {
             var clubRelation = await Context.ClubRelations.FirstOrDefaultAsync(i => i.FirstClub.Id == id);
@@ -123,37 +147,11 @@ namespace Kibol_Alert.Services
             return new SuccessResponse<bool>(true);
         }
 
-        public async Task<Response> EditClub(int id, ClubRequest request)
-        {
-            var club = await Context.Clubs.FirstOrDefaultAsync(i => i.Id == id);
-
-            if (club == null)
-            {
-                return new ErrorResponse("Klubu nie znaleziono!");
-            }
-            if(request.Name != null)
-                club.Name = request.Name;
-            if (request.League != null)
-                club.League = request.League;
-            if (request.LogoUri != null)
-                club.LogoUri = request.LogoUri;
-            if (request.Longitude != null)
-                club.Longitude = request.Longitude;
-            if (request.Latitude != null)
-                club.Latitude = request.Latitude;
-
-            Context.Clubs.Update(club);
-
-            await Context.SaveChangesAsync();
-            AddLog($"Edytowano klub {club.Id}");
-            return new SuccessResponse<bool>(true);
-        }
-
         public async Task<Response> GetClub(int id)
         {
             var club = await Context.Clubs
                 .Include(i => i.RelationsWith)
-                .Include(i => i.InRelationsWith)
+                .Include(i => i.InRelationsWith).ThenInclude(relation => relation.FirstClub)
                 .Include(i => i.Fans)
                 .Include(i => i.Chants)
                 .FirstOrDefaultAsync(i => !i.IsDeleted && i.Id == id);
@@ -165,9 +163,14 @@ namespace Kibol_Alert.Services
                 League = club.League,
                 LogoUri = club.LogoUri,
                 City = club.City,
-                Chants = club.Chants,
                 Longitude = club.Longitude,
                 Latitude = club.Latitude,
+
+                Chants = club.Chants.Select(row => new ChantVM()
+                {
+                    Id = row.Id,
+                    Lyrics = row.Lyrics
+                }).ToList(),
 
                 ClubRelations = club.InRelationsWith.Select(row => new ClubRelationVM()
                 { 
@@ -195,6 +198,7 @@ namespace Kibol_Alert.Services
                 .Include(i => i.RelationsWith)
                 .Include(i => i.InRelationsWith)
                 .Include(i => i.Fans)
+                .Include(i => i.Chants)
                 .Select(row => new ClubVM()
                 {
                     Id = row.Id,
@@ -204,6 +208,11 @@ namespace Kibol_Alert.Services
                     City = row.City,
                     Longitude = row.Longitude,
                     Latitude = row.Latitude,
+                    Chants = row.Chants.Select(row=> new ChantVM()
+                    {
+                        Id = row.Id,
+                        Lyrics = row.Lyrics
+                    }).ToList(),
                     ClubRelations = row.InRelationsWith.Select(row => new ClubRelationVM()
                     {
                         ClubId = row.FirstClub.Id,

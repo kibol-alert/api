@@ -28,7 +28,7 @@ namespace Kibol_Alert.Tests
         {
             _contextBuilder = new ContextBuilder();
             _signInManager = new FakeSignInManager();
-            _userManager = CreateUserManager("Server=tcp:kosa-czy-sztama.database.windows.net,1433;Initial Catalog=kosa-czy-sztama;Persist Security Info=False;User ID=kosa;Password=Qwer1234.;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            _userManager = CreateUserManager();
             _appSettings = Options.Create(new AppSettings(){ Secret = "SPECIALFORTESTS" });
             _jwtHelper = new JwtHelper(_appSettings, _contextBuilder.Context);
             _authorizationService = new AuthenticationService(_contextBuilder.Context, _signInManager, _userManager, _jwtHelper, _logger) ;
@@ -52,6 +52,61 @@ namespace Kibol_Alert.Tests
             Assert.True(result.Success);
 
         }
+        
+        
+        //[Theory]
+        //[MemberData(nameof(DataForRegister))]
+        //public async void LoginTest(string email, string username, string password, string confirmedPassword, int clubId)
+        //{
+        //    var registerRequest = new RegisterRequest()
+        //    {
+        //        Email = email,
+        //        UserName = username,
+        //        Password = password,
+        //        ConfirmedPassword = confirmedPassword,
+        //        ClubId = clubId
+        //    };
+
+        //    var loginRequest = new LoginRequest()
+        //    {
+        //        UserName = username,
+        //        Password = password,
+        //    };
+
+        //    var fakeUser = await _authorizationService.Register(registerRequest);
+        //    var result = await _authorizationService.Login(loginRequest);
+
+            
+        //    Assert.True(result.Success);
+        //}
+
+        //[Theory]
+        //[MemberData(nameof(DataForRegister))]
+        //public async void LogoutTest(string email, string username, string password, string confirmedPassword, int clubId)
+        //{
+        //    var registerRequest = new RegisterRequest()
+        //    {
+        //        Email = email,
+        //        UserName = username,
+        //        Password = password,
+        //        ConfirmedPassword = confirmedPassword,
+        //        ClubId = clubId
+        //    };
+
+        //    var loginRequest = new LoginRequest()
+        //    {
+        //        UserName = username,
+        //        Password = password,
+        //    };
+
+        //    var fakeRegister = await _authorizationService.Register(registerRequest);
+        //    var fakeLogin = await _authorizationService.Login(loginRequest);
+        //    var result = await _authorizationService.Logout();
+
+        //    Assert.True(result.Success);
+        //}
+        
+
         public static IEnumerable<object[]> DataForRegister =>
             new List<object[]>
             {
@@ -64,9 +119,9 @@ namespace Kibol_Alert.Tests
                 }
             };
 
-        private static UserManager<User> CreateUserManager(string connectionString)
+        private static UserManager<User> CreateUserManager()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<Kibol_AlertContext>().UseSqlServer(connectionString);
+            var optionsBuilder = new DbContextOptionsBuilder<Kibol_AlertContext>().UseInMemoryDatabase(databaseName: "Add_writes_to_database");
             var userStore = new UserStore<User>(
                    new Kibol_AlertContext(
                      optionsBuilder.Options

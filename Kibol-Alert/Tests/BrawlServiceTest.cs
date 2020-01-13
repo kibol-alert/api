@@ -23,32 +23,45 @@ namespace Kibol_Alert.Tests
         }
 
         [Theory]
-        [MemberData(nameof(DataForBrawlTest))]
-        public async void AddBrawlTest(string FirstClubName, string SecondClubName, DateTime date, Location location)
+        [MemberData(nameof(DataForAddBrawlTest))]
+        public async void AddBrawlTest(string FirstClubName, string SecondClubName, string date, float longitude, float latitude)
         {
             var request = new BrawlRequest()
             {
                 FirstClubName = FirstClubName,
                 SecondClubName = SecondClubName,
                 Date = date,
-                Location = location
+                Longitude = longitude,
+                Latitude = latitude
             };
 
             var result = await _brawlService.AddBrawl(request);
 
             Assert.True(result.Success);
         }
+        public static IEnumerable<object[]> DataForAddBrawlTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    "2020.01.01 12:00:00",
+                    123456.0f, 
+                    987654.0f
+                }
+            };
 
         [Theory]
         [MemberData(nameof(DataForDeletetBrawlTest))]
-        public async void DeleteBrawlTest(string firstClubName, string secondClubName, DateTime date, Location location, int id)
+        public async void DeleteBrawlTest(string firstClubName, string secondClubName, string date, float longitude, float latitude, int id)
         {
             var request = new BrawlRequest()
             {
                 FirstClubName = firstClubName,
                 SecondClubName = secondClubName,
                 Date = date,
-                Location = location
+                Longitude = longitude,
+                Latitude = latitude
             };
 
             var fakeBrawl = await _brawlService.AddBrawl(request);
@@ -57,24 +70,38 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+        public static IEnumerable<object[]> DataForDeletetBrawlTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    "2020.01.01 12:00:00",
+                    123456.0f, 
+                    987654.0f,
+                    1
+                }
+            };
 
         [Theory]
         [MemberData(nameof(DataForEditBrawlTest))]
-        public async void EditBrawlTest(string firstClubName, string secondClubName, DateTime date, Location location, int id, string firstClubNameEdit, string secondClubNameEdit, DateTime dateEdit, Location locationEdit)
+        public async void EditBrawlTest(string firstClubName, string secondClubName, string date, float longitude, float latitude, int id, string firstClubNameEdit, string secondClubNameEdit, string dateEdit, float longitudeEdit, float latitudeEdit)
         {
             var request1 = new BrawlRequest()
             {
                 FirstClubName = firstClubName,
                 SecondClubName = secondClubName,
                 Date = date,
-                Location = location
+                Longitude = longitude,
+                Latitude = latitude
             };
             var request2 = new BrawlRequest()
             {
                 FirstClubName = firstClubNameEdit,
                 SecondClubName = secondClubNameEdit,
                 Date = dateEdit,
-                Location = locationEdit
+                Longitude = longitudeEdit,
+                Latitude = latitudeEdit
             };
 
             var fakeBrawl = await _brawlService.AddBrawl(request1);
@@ -83,17 +110,35 @@ namespace Kibol_Alert.Tests
 
             Assert.True(result.Success);
         }
+        public static IEnumerable<object[]> DataForEditBrawlTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "FirstClubName1",
+                    "FirstClubName2",
+                    "2020.01.01 12:00:00",
+                    123456.7, 
+                    987654.3f,
+                    1,
+                    "FirstClubName1Edited",
+                    "FirstClubName2Edited",
+                    "2137.01.01 12:00:00",
+                    111111.1f, 
+                    999999.9f
+                }
+            };
 
         [Theory]
         [MemberData(nameof(DataForDeletetBrawlTest))]
-        public async void GetBrawlTest(string firstClubName, string secondClubName, DateTime date, Location location, int id)
+        public async void GetBrawlTest(string firstClubName, string secondClubName, string date, float longitude, float latitude, int id)
         {
             var request = new BrawlRequest()
             {
                 FirstClubName = firstClubName,
                 SecondClubName = secondClubName,
                 Date = date,
-                Location = location
+                Longitude = longitude,
+                Latitude = latitude
             };
 
             var fakeBrawl = await _brawlService.AddBrawl(request);
@@ -103,42 +148,49 @@ namespace Kibol_Alert.Tests
             Assert.True(result.Success);
         }
 
-        public static IEnumerable<object[]> DataForBrawlTest =>
-            new List<object[]>
+        [Theory]
+        [MemberData(nameof(DataForGetBrawlsTest))]
+        public async void GetBrawlsTest(string firstClubName, string secondClubName, string date, float longitude, float latitude, string firstClubName2, string secondClubName2, string date2, float longitude2, float latitude2, int skip, int take)
+        {
+            var request1 = new BrawlRequest()
             {
-                new object[]{
-                    "FirstClubName1",
-                    "FirstClubName2",
-                    new DateTime(2020,01,01,12,00,00),
-                    new Location(123456.0f, 987654.0f)
-                }
+                FirstClubName = firstClubName,
+                SecondClubName = secondClubName,
+                Date = date,
+                Longitude = longitude,
+                Latitude = latitude
             };
-        
-        public static IEnumerable<object[]> DataForDeletetBrawlTest =>
-            new List<object[]>
+            var request2 = new BrawlRequest()
             {
-                new object[]{
-                    "FirstClubName1",
-                    "FirstClubName2",
-                    new DateTime(2020,01,01,12,00,00),
-                    new Location(123456.0f, 987654.0f),
-                    1
-                }
+                FirstClubName = firstClubName2,
+                SecondClubName = secondClubName2,
+                Date = date2,
+                Longitude = longitude2,
+                Latitude = latitude2
             };
 
-        public static IEnumerable<object[]> DataForEditBrawlTest =>
+            var fakeBrawl = await _brawlService.AddBrawl(request1);
+            var fakeBrawl2 = await _brawlService.AddBrawl(request2);
+            var result = await _brawlService.GetBrawls(skip, take);
+
+            Assert.True(result.Success);
+        }
+        public static IEnumerable<object[]> DataForGetBrawlsTest =>
             new List<object[]>
             {
                 new object[]{
                     "FirstClubName1",
                     "FirstClubName2",
-                    new DateTime(2020,01,01,12,00,00),
-                    new Location(123456.0f, 987654.0f),
-                    1,
+                    "2020.01.01 12:00:00",
+                    123456.7,
+                    987654.3f,
                     "FirstClubName1Edited",
                     "FirstClubName2Edited",
-                    new DateTime(2137,01,01,12,00,00),
-                    new Location(000000.0f, 000000.0f),
+                    "2137.01.01 12:00:00",
+                    111111.1f,
+                    999999.9f,
+                    0,
+                    2
                 }
             };
     }

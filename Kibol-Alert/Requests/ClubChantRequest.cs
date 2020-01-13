@@ -2,6 +2,7 @@
 {
     public class ClubChantRequest
     {
+        public int ClubId { get; set; }
         public string Lyrics { get; set; }
     }
 }

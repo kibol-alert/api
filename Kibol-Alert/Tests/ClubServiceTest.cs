@@ -39,6 +39,91 @@ namespace Kibol_Alert.Tests
         }
 
         [Theory]
+        [MemberData(nameof(DataForClubTest))]
+        public async void DeleteClubTest(string name, string league, string logo)
+        {
+            var request = new ClubRequest()
+            {
+                Name = name,
+                League = league,
+                LogoUri = logo
+            };
+
+            var fakeClub = await _clubService.AddClub(request);
+            var fODClub = await _contextBuilder.Context.Clubs.FirstOrDefaultAsync(i => i.Name == name);
+            var result = await _clubService.DeleteClub(fODClub.Id);
+
+            Assert.True(result.Success);
+        }
+
+        [Theory]
+        [MemberData(nameof(DataForEditClubTest))]
+        public async void EditClubTest(string name, string league, string logo, string nameEdit, string leagueEdit, string logoEdit)
+        {
+            var request1 = new ClubRequest()
+            {
+                Name = name,
+                League = league,
+                LogoUri = logo
+            };
+            var request2 = new ClubRequest()
+            {
+                Name = nameEdit,
+                League = leagueEdit,
+                LogoUri = logoEdit
+            };
+
+            var fakeClub = await _clubService.AddClub(request1);
+            var fODClub = await _contextBuilder.Context.Clubs.FirstOrDefaultAsync(i => i.Name == name);
+            var result = await _clubService.EditClub(fODClub.Id, request2);
+
+            Assert.True(result.Success);
+        }
+
+        [Theory]
+        [MemberData(nameof(DataForClubTest))]
+        public async void GetClubTest(string name, string league, string logo)
+        {
+            var request = new ClubRequest()
+            {
+                Name = name,
+                League = league,
+                LogoUri = logo
+            };
+
+            var fakeClub = await _clubService.AddClub(request);
+            var fODClub = await _contextBuilder.Context.Clubs.FirstOrDefaultAsync(i => i.Name == name);
+            var result = await _clubService.GetClub(fODClub.Id);
+
+            Assert.True(result.Success);
+        }
+        [Theory]
+        [MemberData(nameof(DataForGetClubsTest))]
+        public async void GetClubsTest(string name, string league, string logo, string name2, string league2, string logo2, int skip, int take)
+        {
+            var request1 = new ClubRequest()
+            {
+                Name = name,
+                League = league,
+                LogoUri = logo
+            };
+
+            var request2 = new ClubRequest()
+            {
+                Name = name2,
+                League = league2,
+                LogoUri = logo2
+            };
+
+            var fakeClub = await _clubService.AddClub(request1);
+            var fakeClub2 = await _clubService.AddClub(request2);
+            var result = await _clubService.GetClubs(skip, take);
+
+            Assert.True(result.Success);
+        }
+
+
+        [Theory]
         [MemberData(nameof(DataForChantTest))]
         public async void AddChantTest(string lyrics)
         {
@@ -72,6 +157,38 @@ namespace Kibol_Alert.Tests
             Assert.True(result.Success);
         }
 
+        [Theory]
+        [MemberData(nameof(DataForChantTest))]
+        public async void DeleteChantTest(string lyrics)
+        {
+            var request = new ClubChantRequest()
+            {
+                Lyrics = lyrics
+            };
+
+            var fakeChant = await _clubService.AddChant(request);
+            var fODChant = await _contextBuilder.Context.Chants.FirstOrDefaultAsync(i => i.Lyrics == lyrics);
+            var result = await _clubService.DeleteChant(fODChant.Id);
+
+            Assert.True(result.Success);
+        }
+
+        [Theory]
+        [MemberData(nameof(DataForRelationTest))]
+        public async void AddRelationTest(int firstClubId, int secondClubId, RelationType relation)
+        {
+            var request = new ClubRelationRequest()
+            {
+                FirstClubId = firstClubId,
+                SecondClubId = secondClubId,
+                Relation = relation
+            };
+
+            var result = await _clubService.AddRelation(request);
+
+            Assert.True(result.Success);
+        }
+
         public static IEnumerable<object[]> DataForClubTest =>
             new List<object[]>
             {
@@ -79,6 +196,32 @@ namespace Kibol_Alert.Tests
                     "ClubTest",
                     "LeagueTest",
                     "LogoTest"
+                }
+            };
+        public static IEnumerable<object[]> DataForEditClubTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "ClubTest",
+                    "LeagueTest",
+                    "LogoTest",
+                    "ClubTestEdited",
+                    "LeagueTestEdited",
+                    "LogoTestEdited"
+                }
+            };
+        public static IEnumerable<object[]> DataForGetClubsTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    "ClubTest",
+                    "LeagueTest",
+                    "LogoTest",
+                    "ClubTestEdited",
+                    "LeagueTestEdited",
+                    "LogoTestEdited",
+                    0,
+                    2
                 }
             };
         public static IEnumerable<object[]> DataForChantTest =>
@@ -95,6 +238,15 @@ namespace Kibol_Alert.Tests
                     "Chant lyrics test: Arka Gdynia...",
                     1,
                     "Chant lyrics test: Miedź Legnica aż po życia kres!"
+                }
+            };
+        public static IEnumerable<object[]> DataForRelationTest =>
+            new List<object[]>
+            {
+                new object[]{
+                    1,
+                    2,
+                    2
                 }
             };
     }

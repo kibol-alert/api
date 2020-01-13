@@ -5,6 +5,7 @@ using Kibol_Alert.Responses;
 using Kibol_Alert.Services.Interfaces;
 using Kibol_Alert.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,8 @@ namespace Kibol_Alert.Services
                 FirstClubName = request.FirstClubName,
                 SecondClubName = request.SecondClubName,
                 Date = request.Date,
-                Location = request.Location
+                Longitude = request.Longitude,
+                Latitude = request.Latitude
             };
 
             await Context.Brawls.AddAsync(brawl);
@@ -57,8 +59,10 @@ namespace Kibol_Alert.Services
             brawl.FirstClubName = request.FirstClubName;
             brawl.SecondClubName = request.SecondClubName;
             brawl.Date = request.Date;
-            brawl.Location = request.Location;
-            
+            brawl.Longitude = request.Longitude;
+            brawl.Latitude = request.Latitude;
+
+
             Context.Brawls.Update(brawl);
             await Context.SaveChangesAsync();
             AddLog($"Edytowane ustawkę {brawl.Id}");
@@ -68,7 +72,6 @@ namespace Kibol_Alert.Services
         public async Task<Response> GetBrawl(int id)
         {
             var brawl = await Context.Brawls
-                .Include(i => i.Location)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
             var brawlDto = new BrawlVM()
@@ -77,7 +80,8 @@ namespace Kibol_Alert.Services
                 FirstClubName = brawl.FirstClubName,
                 SecondClubName = brawl.SecondClubName,
                 Date = brawl.Date,
-                Location = brawl.Location
+                Longitude = brawl.Longitude,
+                Latitude = brawl.Latitude
             };
 
             return new SuccessResponse<BrawlVM>(brawlDto);
@@ -89,17 +93,20 @@ namespace Kibol_Alert.Services
                 .OrderByDescending(row => row)
                 .Skip(skip)
                 .Take(take)
-                .Include(i => i.Location)
                 .Select(row => new BrawlVM()
                 {
                     Id = row.Id,
                     FirstClubName = row.FirstClubName,
                     SecondClubName = row.SecondClubName,
                     Date = row.Date,
-                    Location = row.Location
-                }).ToListAsync();
+                    Longitude = row.Longitude,
+                    Latitude = row.Latitude
+                })
+                .ToListAsync();
 
-            return new SuccessResponse<List<BrawlVM>>(brawls);
+            var brawlsDto = brawls.Where(row => DateTime.Parse(row.Date) > DateTime.Now).ToList();
+
+            return new SuccessResponse<List<BrawlVM>>(brawlsDto);
         }
     }
 }
